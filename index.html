@@ -1,1 +1,1088 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habitar a vida com beleza</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sage-deep: #6B8F7E;
+  --sage: #82A898;
+  --sage-mid: #9DBFB1;
+  --sage-light: #BAD5CB;
+  --sage-pale: #D8EDE7;
+  --sage-ghost: #EFF7F4;
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-pale: #F5E9C8;
+  --gold-ghost: #FAF4E3;
+  --beige-deep: #C8A882;
+  --beige: #D4B896;
+  --beige-light: #E8D5BC;
+  --beige-pale: #F0E6D6;
+  --beige-ghost: #FAF5EE;
+  --cream: #FDFAF5;
+  --text: #2D3B35;
+  --text-mid: #4A5C54;
+  --text-muted: #8AA098;
+  --border: rgba(100,150,130,0.12);
+  --border-gold: rgba(180,150,60,0.25);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 4px rgba(100,150,130,0.07), 0 2px 8px rgba(100,150,130,0.04);
+  --shadow-md: 0 4px 20px rgba(100,150,130,0.11);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* STRIPE PATTERN */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 28px,
+    rgba(120,170,150,0.022) 28px,
+    rgba(120,170,150,0.022) 56px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app { display:flex; min-height:100vh; position:relative; z-index:1; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 256px;
+  background: var(--sage-deep);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 1px; height: 100%;
+  background: linear-gradient(to bottom, rgba(201,168,76,0.35), transparent, rgba(201,168,76,0.15));
+}
+
+/* LOGO */
+.logo-area {
+  padding: 28px 22px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.logo { display:flex; align-items:center; gap:12px; }
+.logo-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  display: flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(201,168,76,0.35);
+}
+.logo-icon svg { width:20px; height:20px; fill: var(--sage-deep); }
+.logo-text { line-height:1.2; }
+.logo-text strong {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.1px;
+  display: block;
+  line-height: 1.25;
+}
+.logo-text span {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-weight: 300;
+}
+.tagline {
+  margin-top: 12px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: rgba(232,201,122,0.65);
+  letter-spacing: 0.3px;
+}
+
+/* NAV */
+.nav { padding: 14px 12px; flex:1; }
+.nav-section-title {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+  padding: 14px 10px 6px;
+  font-weight: 700;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  transition: all 0.18s;
+  margin-bottom: 1px;
+  letter-spacing: 0.1px;
+}
+.nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+.nav-item.active {
+  background: rgba(201,168,76,0.18);
+  color: var(--gold-light);
+  font-weight: 700;
+  border-left: 2px solid var(--gold);
+  padding-left: 10px;
+}
+.nav-item .nav-icon { font-size:15px; width:20px; text-align:center; opacity:0.9; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: var(--sage-deep);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+/* SIDEBAR FOOTER */
+.sidebar-footer {
+  padding: 18px 20px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.progress-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 7px;
+  display:flex; justify-content:space-between;
+}
+.progress-label strong { color: var(--gold-light); }
+.progress-bar-bg {
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px; height: 5px; overflow:hidden;
+}
+.progress-bar-fill {
+  height: 5px; border-radius: 20px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width 0.4s ease;
+}
+.streak {
+  display:flex; align-items:center; gap:6px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--gold-light);
+  font-weight: 700;
+}
+.streak span { color: rgba(255,255,255,0.5); font-weight:400; }
+
+/* ── MAIN ── */
+.main { margin-left: 256px; flex:1; padding: 36px 40px; }
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 30px; }
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--sage-deep);
+  letter-spacing: -0.5px;
+}
+.page-header p { font-size: 14px; color: var(--text-muted); margin-top: 5px; font-weight: 300; letter-spacing: 0.2px; }
+
+/* HERO */
+.today-hero {
+  background: var(--sage-deep);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.today-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to right,
+    transparent, transparent 18px,
+    rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 36px
+  );
+}
+.today-hero::after {
+  content: '— Manual da Casa';
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(201,168,76,0.4);
+  position: absolute;
+  bottom: 16px; right: 24px;
+  letter-spacing: 0.5px;
+}
+.today-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  position: relative;
+}
+.today-hero p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 4px; font-weight: 300; position:relative; }
+
+/* GRIDS */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+
+/* CARDS */
+.card {
+  background: #FFFFFF;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.card-gold {
+  background: var(--gold-ghost);
+  border: 1px solid var(--border-gold);
+}
+.card-sage {
+  background: var(--sage-ghost);
+  border: 1px solid rgba(90,120,90,0.15);
+}
+.card-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 18px;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-deep);
+}
+.card-subtitle { font-size: 12px; color: var(--text-muted); font-weight: 300; }
+
+/* STAT CARDS */
+.stat-card {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 20px 18px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.stat-icon { font-size: 22px; margin-bottom: 8px; }
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+.stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 3px; font-weight: 700; }
+
+/* CHECKLIST */
+.checklist { list-style:none; }
+.checklist li {
+  display:flex; align-items:flex-start; gap:11px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  color: var(--text-mid);
+  letter-spacing: 0.1px;
+}
+.checklist li:last-child { border-bottom:none; }
+.checklist li.done { opacity:0.4; text-decoration:line-through; }
+.check-box {
+  width: 19px; height: 19px;
+  border-radius: 5px;
+  border: 1.5px solid var(--sage-light);
+  flex-shrink: 0;
+  display:flex; align-items:center; justify-content:center;
+  transition: all 0.18s;
+  margin-top: 1px;
+  background: transparent;
+}
+.checklist li.done .check-box {
+  background: var(--sage);
+  border-color: var(--sage);
+}
+.check-tick { color: white; font-size: 11px; display:none; }
+.checklist li.done .check-tick { display:block; }
+
+/* WEEK TABS */
+.week-tabs { display:flex; gap:6px; margin-bottom:18px; flex-wrap:wrap; }
+.week-tab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+}
+.week-tab.active { background: var(--sage); border-color: var(--sage); color: white; }
+.week-tab:hover:not(.active) { border-color: var(--sage-mid); color: var(--sage); }
+
+/* BADGES */
+.badge { display:inline-flex; align-items:center; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:0.3px; }
+.badge-sage { background: var(--sage-ghost); color: var(--sage); border: 1px solid var(--sage-pale); }
+.badge-gold { background: var(--gold-ghost); color: var(--gold); border: 1px solid var(--gold-pale); }
+.badge-beige { background: var(--beige-pale); color: var(--beige-deep); border: 1px solid var(--beige-light); }
+.badge-cream { background: var(--cream); color: var(--text-muted); border: 1px solid var(--border); }
+
+/* SECTION */
+.section { display:none; }
+.section.active { display:block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:22px; }
+.timeline::before { content:''; position:absolute; left:8px; top:8px; bottom:8px; width:1.5px; background:var(--sage-pale); }
+.timeline-item { position:relative; margin-bottom:20px; }
+.timeline-dot { position:absolute; left:-22px; top:4px; width:14px; height:14px; border-radius:50%; border:2.5px solid white; box-shadow:0 0 0 2px var(--sage-pale); }
+.timeline-title { font-size:13px; font-weight:700; color:var(--sage-deep); }
+.timeline-desc { font-size:12px; color:var(--text-muted); margin-top:2px; font-weight:300; }
+
+/* LAUNDRY */
+.laundry-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.laundry-col h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sage-deep);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gold-pale);
+}
+.laundry-symbol { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:12px; color:var(--text-muted); font-weight:300; }
+.sym-box {
+  width:34px; height:34px;
+  border: 1px solid var(--sage-pale);
+  border-radius: 8px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-size:15px;
+  background: var(--sage-ghost);
+  color: var(--sage);
+}
+
+/* ORG STEPS */
+.org-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
+.org-step {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.org-step:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.org-step-num {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--sage-deep);
+  font-weight: 700;
+  font-size: 14px;
+  display:flex; align-items:center; justify-content:center;
+  margin: 0 auto 10px;
+  font-family: 'Playfair Display', serif;
+  box-shadow: 0 2px 8px rgba(201,168,76,0.3);
+}
+.org-step-title { font-size:13px; font-weight:700; color:var(--sage-deep); font-family:'Playfair Display',serif; }
+.org-step-desc { font-size:11px; color:var(--text-muted); margin-top:4px; font-weight:300; }
+
+/* ROOM CARD */
+.room-card { border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; box-shadow:var(--shadow); }
+.room-card-header {
+  padding: 18px 22px;
+  font-family: 'Playfair Display', serif;
+  font-weight:600; font-size:15px;
+  display:flex; align-items:center; gap:10px;
+}
+.room-card-body { padding:18px 22px; background:white; }
+
+/* BUTTONS */
+.btn { padding:9px 20px; border-radius:var(--radius-sm); border:none; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.15s; letter-spacing:0.3px; font-family:'Lato',sans-serif; }
+.btn-primary { background:var(--sage); color:white; }
+.btn-primary:hover { background:var(--sage-deep); }
+.btn-gold { background:var(--gold); color:var(--sage-deep); }
+.btn-gold:hover { background:var(--gold-light); }
+
+/* INPUT */
+.input-row { display:flex; gap:8px; margin-top:14px; }
+.input-row input {
+  flex:1; padding:9px 14px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--sage-pale);
+  font-size:13px;
+  background:var(--sage-ghost);
+  color:var(--text);
+  outline:none;
+  font-family:'Lato',sans-serif;
+}
+.input-row input:focus { border-color:var(--sage); background:white; }
+
+/* WEEK DAYS */
+.week-indicator { display:flex; gap:7px; margin-bottom:22px; }
+.day-chip {
+  width:38px; height:38px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700;
+  color:var(--text-muted);
+  cursor:pointer;
+  border:1.5px solid var(--border);
+  transition:all 0.15s;
+  flex-direction:column;
+}
+.day-chip.today { background:var(--sage); color:white; border-color:var(--sage); }
+.day-chip.done-day { background:var(--gold-ghost); color:var(--gold); border-color:var(--gold-pale); }
+.day-chip-label { font-size:8px; margin-top:1px; font-weight:400; }
+
+/* MISC */
+.divider { height:1px; background:var(--border); margin:20px 0; }
+.flex-row { display:flex; align-items:center; gap:10px; }
+.ml-auto { margin-left:auto; }
+.text-muted { color:var(--text-muted); font-size:12px; }
+
+/* AGENDA WEEK CARDS */
+.agenda-week-card {
+  background:white;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  padding:16px 20px;
+  cursor:pointer;
+  transition:all 0.18s;
+  box-shadow:var(--shadow);
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:10px;
+}
+.agenda-week-card:hover { transform:translateX(4px); border-color:var(--sage-light); }
+.agenda-week-card.current { border-left:3px solid var(--gold); padding-left:17px; background:var(--gold-ghost); }
+.agenda-week-icon { font-size:24px; }
+.agenda-week-name { font-family:'Playfair Display',serif; font-size:14px; font-weight:600; color:var(--sage-deep); }
+.agenda-week-sub { font-size:12px; color:var(--text-muted); font-weight:300; }
+
+/* HIST CHART */
+#hist-chart { display:flex; gap:7px; align-items:flex-end; height:64px; width:100%; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--sage-pale); border-radius:10px; }
+
+/* GOLD DIVIDER */
+.gold-line {
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold-pale), var(--gold-light), var(--gold-pale), transparent);
+  margin:24px 0;
+  border-radius:2px;
+}
+
+/* TIP BOX */
+.tip-box {
+  background:var(--gold-ghost);
+  border:1px solid var(--gold-pale);
+  border-left:3px solid var(--gold);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  font-size:13px;
+  color:var(--text-mid);
+  line-height:1.7;
+}
+.tip-box strong { color:var(--sage-deep); font-weight:700; }
+
+@media(max-width:768px){
+  .sidebar{width:100%;height:auto;position:relative;}
+  .main{margin-left:0;padding:16px;}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+  .laundry-grid{grid-template-columns:repeat(2,1fr);}
+  .org-steps{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </div>
+      <div class="logo-text">
+        <strong>Habitar a vida com beleza</strong>
+        <span>Manual da Casa</span>
+      </div>
+    </div>
+    <div class="tagline">Limpeza · Organização · Bem-estar</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-section-title">Principal</div>
+    <div class="nav-item active" onclick="showSection('hoje',this)">
+      <span class="nav-icon">🏠</span> Hoje
+    </div>
+    <div class="nav-item" onclick="showSection('agenda',this)">
+      <span class="nav-icon">📅</span> Agenda de Limpeza
+    </div>
+    <div class="nav-item" onclick="showSection('diario',this)">
+      <span class="nav-icon">✅</span> Tarefas Diárias
+    </div>
+    <div class="nav-item" onclick="showSection('semanal',this)">
+      <span class="nav-icon">📋</span> Tarefas Semanais
+    </div>
+    <div class="nav-section-title">Por Frequência</div>
+    <div class="nav-item" onclick="showSection('trimestral',this)">
+      <span class="nav-icon">🔄</span> Trimestrais
+    </div>
+    <div class="nav-item" onclick="showSection('semestral',this)">
+      <span class="nav-icon">🛠</span> Semestrais
+    </div>
+    <div class="nav-section-title">Por Ambiente</div>
+    <div class="nav-item" onclick="showSection('quartos',this)">
+      <span class="nav-icon">🛏</span> Quartos
+    </div>
+    <div class="nav-item" onclick="showSection('salas',this)">
+      <span class="nav-icon">🛋</span> Salas & Escritórios
+    </div>
+    <div class="nav-item" onclick="showSection('cozinha',this)">
+      <span class="nav-icon">🍳</span> Cozinha & Lavanderia
+    </div>
+    <div class="nav-item" onclick="showSection('banheiros',this)">
+      <span class="nav-icon">🚿</span> Banheiros
+    </div>
+    <div class="nav-item" onclick="showSection('externos',this)">
+      <span class="nav-icon">🌿</span> Quintais & Varandas
+    </div>
+    <div class="nav-section-title">Guias</div>
+    <div class="nav-item" onclick="showSection('lavanderia',this)">
+      <span class="nav-icon">👕</span> Guia da Lavanderia
+    </div>
+    <div class="nav-item" onclick="showSection('organizacao',this)">
+      <span class="nav-icon">📦</span> 9 Passos da Organização
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="progress-label">
+      <span>Progresso de hoje</span>
+      <strong id="progress-pct">0%</strong>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="streak">
+      🔥 <span id="streak-count">3 dias consecutivos</span>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ── HOJE ── -->
+  <section class="section active" id="sec-hoje">
+    <div class="today-hero">
+      <h2>Bom dia ✨</h2>
+      <p id="today-date-hero"></p>
+    </div>
+
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value" id="stat-done" style="color:var(--sage)">0</div>
+        <div class="stat-label">Concluídas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📋</div>
+        <div class="stat-value" id="stat-total" style="color:var(--gold)">17</div>
+        <div class="stat-label">Total Hoje</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⏱</div>
+        <div class="stat-value" style="color:var(--beige-deep)">~15</div>
+        <div class="stat-label">Min. Furacão</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🗓</div>
+        <div class="stat-value" id="stat-week" style="color:var(--sage-mid)">S1</div>
+        <div class="stat-label">Semana Atual</div>
+      </div>
+    </div>
+
+    <div class="week-indicator" id="week-days"></div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">⚡ 15 Minutos Furacão</div>
+            <div class="card-subtitle">Tarefas essenciais do dia</div>
+          </div>
+          <span class="badge badge-sage" id="daily-badge">0/17</span>
+        </div>
+        <ul class="checklist" id="daily-list"></ul>
+        <div class="input-row">
+          <input type="text" id="custom-daily" placeholder="Adicionar tarefa personalizada…" />
+          <button class="btn btn-gold" onclick="addCustomDaily()">+</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">📅 Esta Semana</div>
+            <div class="card-subtitle" id="week-name-display">1ª Semana — Quartos</div>
+          </div>
+        </div>
+        <div class="week-tabs">
+          <div class="week-tab active" onclick="setWeek(1,this)">S1</div>
+          <div class="week-tab" onclick="setWeek(2,this)">S2</div>
+          <div class="week-tab" onclick="setWeek(3,this)">S3</div>
+          <div class="week-tab" onclick="setWeek(4,this)">S4</div>
+          <div class="week-tab" onclick="setWeek(5,this)">S5</div>
+        </div>
+        <ul class="checklist" id="week-preview-list"></ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">📊 Histórico da Semana</div></div>
+      <div id="hist-chart"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;">
+        <span class="text-muted">Seg</span><span class="text-muted">Ter</span><span class="text-muted">Qua</span><span class="text-muted">Qui</span><span class="text-muted">Sex</span><span class="text-muted">Sáb</span><span class="text-muted">Dom</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AGENDA ── -->
+  <section class="section" id="sec-agenda">
+    <div class="page-header">
+      <h1>Agenda de Limpeza</h1>
+      <p>Divida sua casa em 5 áreas — foque em apenas 1 área por semana</p>
+    </div>
+    <div class="grid-2">
+      <div id="agenda-week-cards"></div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Como funciona</div></div>
+        <div class="timeline" id="agenda-timeline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIÁRIO ── -->
+  <section class="section" id="sec-diario">
+    <div class="page-header">
+      <h1>Tarefas Diárias</h1>
+      <p>Execute todos os dias para manter a casa em ordem</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Lista Completa</div>
+          <span class="badge badge-sage" id="diario-badge">0/17</span>
+        </div>
+        <ul class="checklist" id="diario-full-list"></ul>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header"><div class="card-title">Ritmo do Dia</div></div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--sage)"></div>
+              <div><div class="timeline-title">Manhã — Arrumação geral</div><div class="timeline-desc">Camas, vassouras, bancadas e banheiros</div></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--gold)"></div>
+              <div><div class="timeline-title">Tarde — Cozinha & Roupas</div><div class="timeline-desc">Cozinhar, louças, roupas e pets</div></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--beige-deep)"></div>
+              <div><div class="timeline-title">Noite — Finalização</div><div class="timeline-desc">Lixo, aromatizar, abrir janelas, plantas</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>⚡ Furacão 15 minutos</strong><br>
+          Quando o tempo estiver curto, foque apenas nas primeiras 5 tarefas para manter o essencial em dia.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEMANAL ── -->
+  <section class="section" id="sec-semanal">
+    <div class="page-header"><h1>Tarefas Semanais</h1><p>Execute uma vez por semana para manter o padrão da casa</p></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Checklist Semanal</div>
+        <span class="badge badge-gold" id="semanal-badge">0/9</span>
+      </div>
+      <ul class="checklist" id="semanal-list"></ul>
+    </div>
+  </section>
+
+  <!-- ── TRIMESTRAL ── -->
+  <section class="section" id="sec-trimestral">
+    <div class="page-header"><h1>Tarefas Trimestrais</h1><p>A cada 3 meses — conservação e manutenção profunda</p></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Checklist Trimestral</div>
+        <span class="badge badge-beige" id="trim-badge">0/5</span>
+      </div>
+      <ul class="checklist" id="trim-list"></ul>
+    </div>
+  </section>
+
+  <!-- ── SEMESTRAL ── -->
+  <section class="section" id="sec-semestral">
+    <div class="page-header"><h1>Tarefas Semestrais</h1><p>A cada 6 meses — manutenção e conservação da casa</p></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Checklist Semestral</div>
+        <span class="badge badge-beige" id="sem-badge">0/12</span>
+      </div>
+      <ul class="checklist" id="sem-list"></ul>
+    </div>
+  </section>
+
+  <!-- ── QUARTOS ── -->
+  <section class="section" id="sec-quartos">
+    <div class="page-header"><h1>Semana dos Quartos</h1><p>Passo a passo completo para limpeza profunda dos quartos</p></div>
+    <div class="room-card">
+      <div class="room-card-header" style="background:var(--sage-ghost);color:var(--sage-deep);border-bottom:1px solid var(--sage-pale);">
+        🛏 Quartos <span class="badge badge-sage ml-auto" id="quartos-badge">0/17</span>
+      </div>
+      <div class="room-card-body"><ul class="checklist" id="quartos-list"></ul></div>
+    </div>
+  </section>
+
+  <!-- ── SALAS ── -->
+  <section class="section" id="sec-salas">
+    <div class="page-header"><h1>Semana das Salas & Escritórios</h1><p>Passo a passo completo</p></div>
+    <div class="room-card">
+      <div class="room-card-header" style="background:var(--beige-pale);color:var(--sage-deep);border-bottom:1px solid var(--beige-light);">
+        🛋 Salas & Escritórios <span class="badge badge-beige ml-auto" id="salas-badge">0/19</span>
+      </div>
+      <div class="room-card-body"><ul class="checklist" id="salas-list"></ul></div>
+    </div>
+  </section>
+
+  <!-- ── COZINHA ── -->
+  <section class="section" id="sec-cozinha">
+    <div class="page-header"><h1>Semana da Cozinha & Lavanderia</h1><p>Passo a passo completo</p></div>
+    <div class="room-card">
+      <div class="room-card-header" style="background:var(--gold-ghost);color:var(--sage-deep);border-bottom:1px solid var(--gold-pale);">
+        🍳 Cozinha & Lavanderia <span class="badge badge-gold ml-auto" id="cozinha-badge">0/22</span>
+      </div>
+      <div class="room-card-body"><ul class="checklist" id="cozinha-list"></ul></div>
+    </div>
+  </section>
+
+  <!-- ── BANHEIROS ── -->
+  <section class="section" id="sec-banheiros">
+    <div class="page-header"><h1>Semana dos Banheiros</h1><p>Passo a passo completo</p></div>
+    <div class="room-card">
+      <div class="room-card-header" style="background:var(--sage-ghost);color:var(--sage-deep);border-bottom:1px solid var(--sage-pale);">
+        🚿 Banheiros <span class="badge badge-sage ml-auto" id="banh-badge">0/18</span>
+      </div>
+      <div class="room-card-body"><ul class="checklist" id="banh-list"></ul></div>
+    </div>
+  </section>
+
+  <!-- ── EXTERNOS ── -->
+  <section class="section" id="sec-externos">
+    <div class="page-header"><h1>Semana dos Quintais & Varandas</h1><p>Passo a passo para áreas externas</p></div>
+    <div class="room-card">
+      <div class="room-card-header" style="background:var(--sage-pale);color:var(--sage-deep);border-bottom:1px solid var(--sage-light);">
+        🌿 Quintais & Varandas <span class="badge badge-sage ml-auto" id="ext-badge">0/10</span>
+      </div>
+      <div class="room-card-body"><ul class="checklist" id="ext-list"></ul></div>
+    </div>
+  </section>
+
+  <!-- ── LAVANDERIA ── -->
+  <section class="section" id="sec-lavanderia">
+    <div class="page-header"><h1>Guia da Lavanderia</h1><p>Símbolos e instruções para cuidar das suas roupas com elegância</p></div>
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-header"><div class="card-title">Símbolos de Lavagem</div></div>
+      <div class="laundry-grid" id="laundry-symbols"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Instruções Gerais</div></div>
+      <div id="laundry-tips"></div>
+    </div>
+  </section>
+
+  <!-- ── ORGANIZAÇÃO ── -->
+  <section class="section" id="sec-organizacao">
+    <div class="page-header"><h1>9 Passos da Organização</h1><p>Metodologia completa para organizar qualquer ambiente</p></div>
+    <div class="org-steps" id="org-steps-grid"></div>
+    <div class="gold-line"></div>
+    <div class="tip-box">
+      <strong>Foque em um único cômodo por vez.</strong> Tentar organizar a casa toda de uma vez gera sobrecarga e cansaço. Siga os 9 passos na ordem indicada para resultados que realmente duram — e que funcionam para os seus hábitos.
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+const DATA = {
+  daily: ['⚡ 15 Minutos Furacão — rotina rápida','🛏 Arrumar as camas','🧹 Passar vassoura e pano nos pisos','🚿 Passar pano: bancadas e vasos dos banheiros','🧻 Reposição de papel higiênico (se necessário)','🍳 Passar pano: bancada da cozinha e fogão','🍽 Trocar pano de prato da cozinha','👨‍🍳 Cozinhar','🧽 Desinfetar esponja de lavar louça','🫧 Lavar louças','👗 Cuidar das roupas','🐾 Cuidar dos pets','🌱 Regar as plantas e flores','🗑 Retirar o lixo','📦 Cozinhar e preparar marmitas','🪟 Abrir janelas','✨ Aromatizar a casa'],
+  semanal: ['🛁 Trocar toalhas','🛏 Trocar roupas de cama','👔 Passar e guardar roupas','🧽 Trocar esponja de lavar louça','🏊 Limpar a piscina (se houver)','📄 Organizar e arquivar contas e correspondências','📓 Organizar o planner semanal','🛒 Realizar compras de supermercado e feira','💻 Limpar telas dos computadores'],
+  trimestral: ['🔄 Virar colchões do lado oposto','🛏 Lavar travesseiros','🚪 Passar lubrificante nas portas','📚 Higienizar os livros para evitar traças e alergias','💡 Trocar lâmpadas queimadas'],
+  semestral: ['🦟 Dedetização','🛋 Lavagem de estofados','🪣 Lavagem de tapetes','🪵 Utilizar cera em móveis de madeira','🌬 Aspirar a parte traseira da geladeira','🧲 Limpar borrachas de vedação da geladeira','🍽 Lavar todas as louças sem uso da casa','👚 Lavar todas as roupas sem uso da casa','💊 Descartar remédios vencidos','❄️ Limpar filtro de ar condicionado','🔧 Realizar manutenção filtro cozinha','🏠 Verificar calha, telhado e caixa d\'água'],
+  quartos: ['Limpar armário (interno e externo)','Limpar gavetas (interno e externo)','Limpar objetos e enfeites','Limpar prateleiras','Passar pano em livros e retratos','Bater e arejar os travesseiros','Bater e arejar tapetes','Aspirar e limpar o piso','Lavar as cortinas','Limpar as janelas','Limpar portas, dobradiças, lustres e maçanetas','Limpar lâmpadas, lustres e ventiladores','Limpar paredes','Limpar teto','Limpar interruptores','Limpar TV e outros eletrônicos','Arejar e aromatizar o ambiente'],
+  salas: ['Limpar armário (interno e externo)','Limpar gavetas (interno e externo)','Limpar prateleiras','Limpar mesas e cadeiras','Limpar móveis','Limpar objetos e enfeites','Passar pano em livros e retratos','Bater e arejar as almofadas','Bater e arejar tapetes','Aspirar e limpar o piso','Lavar as cortinas','Limpar as janelas','Limpar portas, dobradiças, lustres e maçanetas','Limpar lâmpadas, lustres e ventiladores','Limpar paredes','Limpar teto','Limpar interruptores','Limpar TV e outros eletrônicos','Arejar e aromatizar o ambiente'],
+  cozinha: ['Limpar armário (interno e externo)','Limpar gavetas (interno e externo)','Descartar alimentos vencidos','Limpar queimadores e grades do fogão','Desentupir fogão','Limpar microondas','Desinfetar lixeiras','Limpar prataria','Limpar mesas e cadeiras','Limpar prateleiras','Passar pano em livros de receita','Aspirar e limpar o piso','Limpar as janelas','Limpar portas, dobradiças e maçanetas','Limpar paredes','Limpar teto','Limpar interruptores','Limpar eletrodomésticos','Limpar pia e misturadores','Limpar exaustor','Limpar máquina de lavar e secar roupas','Limpar ferro de passar'],
+  banheiros: ['Limpar armário (interno e externo)','Limpar gavetas (interno e externo)','Limpar objetos','Limpar prateleiras','Lavar box','Limpar rejunte dos azulejos','Trocar desinfetantes de pastilha do vaso','Limpar e desentupir furinhos do chuveiro e chuveirinho','Limpar escovas de cabelo e pincéis de maquiagem','Limpar espelhos','Aspirar e limpar o piso','Limpar as janelas','Limpar portas, dobradiças e maçanetas','Limpar lâmpadas e lustres','Limpar paredes','Limpar teto com anti mofo','Limpar interruptores','Arejar e aromatizar o ambiente'],
+  externos: ['Limpar o piso','Varrer jardim','Limpar as janelas','Limpar portas, dobradiças e maçanetas','Limpar lâmpadas e lustres','Limpar paredes','Limpar teto','Limpar interruptores','Lavar capacho de entrada','Podar as plantas'],
+  weeks: [
+    {label:'1ª Semana',name:'Quartos',icon:'🛏',key:'quartos'},
+    {label:'2ª Semana',name:'Salas e Escritórios',icon:'🛋',key:'salas'},
+    {label:'3ª Semana',name:'Cozinha e Lavanderia',icon:'🍳',key:'cozinha'},
+    {label:'4ª Semana',name:'Banheiros',icon:'🚿',key:'banheiros'},
+    {label:'5ª Semana',name:'Entrada, Quintais e Varandas',icon:'🌿',key:'externos'}
+  ],
+  orgSteps:[
+    {n:1,title:'Escolha um cômodo',desc:'Foque em apenas um ambiente por vez'},
+    {n:2,title:'Analise os hábitos',desc:'Entenda como você usa o espaço'},
+    {n:3,title:'Analise o espaço',desc:'Medidas e disponibilidade de áreas'},
+    {n:4,title:'Escolha organizadores',desc:'Caixas, cestos, gavetas adaptadas'},
+    {n:5,title:'Categorize',desc:'Separe por tipo, uso e frequência'},
+    {n:6,title:'Descarte',desc:'Elimine o desnecessário sem culpa'},
+    {n:7,title:'Organize (casinhas)',desc:'Cada coisa em seu lugar fixo'},
+    {n:8,title:'Identificação',desc:'Etiquete caixas, gavetas e prateleiras'},
+    {n:9,title:'Manual da Casa',desc:'Documente os processos e rotinas'}
+  ],
+  laundry:{
+    lavar:[{sym:'🪣',l:'Máquina ou mão'},{sym:'30°',l:'Temperatura máxima 30°'},{sym:'〰',l:'Lavagem suave'},{sym:'✋',l:'Não torcer'},{sym:'🤲',l:'Lavagem manual'},{sym:'🚫',l:'Sem água — lavagem a seco'}],
+    alvejar:[{sym:'△',l:'Pode alvejar'},{sym:'△̲',l:'Sem cloro'},{sym:'△̲̲',l:'Sem alvejante'},{sym:'✕',l:'Proibido alvejar'}],
+    secar:[{sym:'↓🌡',l:'Baixa temperatura'},{sym:'⊙',l:'Secagem normal'},{sym:'🚫⊙',l:'Proibido secadora'},{sym:'□',l:'No varal'},{sym:'═',l:'Horizontal'},{sym:'|||',l:'Vertical'},{sym:'◺',l:'Sem torcer'}],
+    passar:[{sym:'🔲',l:'Normal'},{sym:'110°',l:'Até 110°'},{sym:'150°',l:'Até 150°'},{sym:'200°',l:'Até 200°'},{sym:'🚫🔲',l:'Não passar'}]
+  },
+  laundryTips:['Tenha um cesto de transporte para coletar roupas sujas. Separe em baldes específicos: branca, colorida, íntima, cama mesa & banho.','Separe as roupas por tipo de tecido — os tecidos mais pesados devem ser lavados em ciclo diferente dos leves.','Feche zíperes, levante colarinhos e esvazie bolsos antes de lavar.','Leia a etiqueta de lavagem para informações sobre centrifugação, secagem, temperatura e modo de passar.','Para peças delicadas, use saquinhos com zíper. Não deixe de molho por mais de uma hora.','Se houver mancha ou gordura, faça pré-lavagem com produto removedor antes de colocar na máquina.','Cuidado com água quente — pode danificar as peças e diminuir a vida útil.','Para manter a cor de peças escuras, lave-as viradas do avesso.','Use fita adesiva ou rolinho para retirar bolinhas. Jamais utilize gilete para essa finalidade.']
+};
+
+let state={};
+function getKey(){ return 'casaEmOrdem_v3_'+new Date().toDateString(); }
+function loadState(){ try{ const s=localStorage.getItem(getKey()); if(s) state=JSON.parse(s); else state={}; }catch(e){ state={}; } }
+function saveState(){ try{ localStorage.setItem(getKey(),JSON.stringify(state)); }catch(e){} }
+
+function makeChecklist(items,sk,badgeId,listId){
+  if(!state[sk]) state[sk]={};
+  const ul=document.getElementById(listId); if(!ul) return;
+  ul.innerHTML='';
+  items.forEach((item,i)=>{
+    const done=!!state[sk][i];
+    const li=document.createElement('li');
+    li.className=done?'done':'';
+    li.innerHTML=`<div class="check-box"><span class="check-tick">✓</span></div><span>${item}</span>`;
+    li.onclick=()=>{
+      state[sk][i]=!state[sk][i];
+      li.className=state[sk][i]?'done':'';
+      saveState();
+      updateBadge(sk,items.length,badgeId);
+      if(sk==='daily') updateProgress();
+    };
+    ul.appendChild(li);
+  });
+  updateBadge(sk,items.length,badgeId);
+}
+
+function updateBadge(sk,total,badgeId){
+  const el=document.getElementById(badgeId); if(!el||!state[sk]) return;
+  const done=Object.values(state[sk]).filter(Boolean).length;
+  el.textContent=done+'/'+total;
+}
+
+function updateProgress(){
+  const total=DATA.daily.length;
+  const done=state.daily?Object.values(state.daily).filter(Boolean).length:0;
+  const pct=Math.round((done/total)*100);
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('stat-done').textContent=done;
+  document.getElementById('stat-total').textContent=total;
+}
+
+function showSection(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+
+let currentWeek=1;
+function setWeek(n,el){
+  currentWeek=n;
+  document.querySelectorAll('.week-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const w=DATA.weeks[n-1];
+  document.getElementById('week-name-display').textContent=w.label+' — '+w.name;
+  document.getElementById('stat-week').textContent='S'+n;
+  renderWeekPreview(n);
+}
+
+function renderWeekPreview(n){
+  const keys=['quartos','salas','cozinha','banheiros','externos'];
+  const items=DATA[keys[n-1]].slice(0,6);
+  const ul=document.getElementById('week-preview-list'); if(!ul) return;
+  ul.innerHTML='';
+  items.forEach(item=>{
+    const li=document.createElement('li');
+    li.innerHTML=`<div class="check-box"></div><span>${item}</span>`;
+    ul.appendChild(li);
+  });
+  const more=DATA[keys[n-1]].length-6;
+  if(more>0){
+    const li=document.createElement('li');
+    li.style.color='var(--text-muted)'; li.style.fontSize='12px';
+    li.innerHTML=`<span style="margin-left:30px; font-style:italic;">… e mais ${more} tarefas</span>`;
+    ul.appendChild(li);
+  }
+}
+
+function addCustomDaily(){
+  const inp=document.getElementById('custom-daily');
+  const val=inp.value.trim(); if(!val) return;
+  DATA.daily.push('📝 '+val); inp.value='';
+  makeChecklist(DATA.daily,'daily','daily-badge','daily-list');
+  makeChecklist(DATA.daily,'daily','diario-badge','diario-full-list');
+  updateProgress();
+}
+
+function buildAgenda(){
+  const cont=document.getElementById('agenda-week-cards'); if(!cont) return;
+  DATA.weeks.forEach((w,i)=>{
+    const d=document.createElement('div');
+    d.className='agenda-week-card'+(i+1===currentWeek?' current':'');
+    d.innerHTML=`<div class="agenda-week-icon">${w.icon}</div>
+      <div><div class="agenda-week-name">${w.label}</div><div class="agenda-week-sub">${w.name}</div></div>
+      ${i+1===currentWeek?`<span class="badge badge-gold ml-auto">Esta semana</span>`:''}`;
+    cont.appendChild(d);
+  });
+  const tl=document.getElementById('agenda-timeline'); if(!tl) return;
+  const tips=['Separe 1 área por semana para não sobrecarregar','Use a lista de cada semana como guia completo','Combine com tarefas diárias para manter o padrão','Após 5 semanas o ciclo se reinicia com mais facilidade','Personalize as listas conforme sua rotina'];
+  const colors=['var(--sage)','var(--gold)','var(--beige-deep)','var(--sage-mid)','var(--sage-light)'];
+  tips.forEach((t,i)=>{
+    tl.innerHTML+=`<div class="timeline-item"><div class="timeline-dot" style="background:${colors[i]}"></div><div class="timeline-content"><div class="timeline-desc">${t}</div></div></div>`;
+  });
+}
+
+function buildLaundry(){
+  const grid=document.getElementById('laundry-symbols'); if(!grid) return;
+  const cols=['lavar','alvejar','secar','passar'];
+  const titles=['🪣 Lavar','⬜ Alvejar','💨 Secar','🔲 Passar'];
+  cols.forEach((col,ci)=>{
+    const div=document.createElement('div');
+    div.className='laundry-col';
+    div.innerHTML=`<h3>${titles[ci]}</h3>`;
+    DATA.laundry[col].forEach(s=>{
+      div.innerHTML+=`<div class="laundry-symbol"><div class="sym-box">${s.sym}</div><span>${s.l}</span></div>`;
+    });
+    grid.appendChild(div);
+  });
+  const tips=document.getElementById('laundry-tips'); if(!tips) return;
+  DATA.laundryTips.forEach(tip=>{
+    const p=document.createElement('div');
+    p.style.cssText='display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.6;font-weight:300;color:var(--text-mid);';
+    p.innerHTML=`<span style="color:var(--sage);flex-shrink:0;font-weight:700;">✓</span><span>${tip}</span>`;
+    tips.appendChild(p);
+  });
+}
+
+function buildOrgSteps(){
+  const grid=document.getElementById('org-steps-grid'); if(!grid) return;
+  DATA.orgSteps.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='org-step';
+    div.innerHTML=`<div class="org-step-num">${s.n}</div><div class="org-step-title">${s.title}</div><div class="org-step-desc">${s.desc}</div>`;
+    grid.appendChild(div);
+  });
+}
+
+function buildWeekDays(){
+  const cont=document.getElementById('week-days'); if(!cont) return;
+  const days=['S','T','Q','Q','S','S','D'];
+  const labels=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  const today=new Date().getDay();
+  const idx=today===0?6:today-1;
+  days.forEach((d,i)=>{
+    const chip=document.createElement('div');
+    chip.className='day-chip'+(i===idx?' today':i<idx?' done-day':'');
+    chip.innerHTML=`${d}<span class="day-chip-label">${labels[i][0]}</span>`;
+    cont.appendChild(chip);
+  });
+}
+
+function buildHistChart(){
+  const chart=document.getElementById('hist-chart'); if(!chart) return;
+  const vals=[80,55,100,40,70,88,0];
+  const today=new Date().getDay();
+  const idx=today===0?6:today-1;
+  vals.forEach((v,i)=>{
+    const bar=document.createElement('div');
+    const h=Math.max(v*0.62,4);
+    bar.style.cssText=`flex:1;height:${h}px;border-radius:5px 5px 0 0;align-self:flex-end;transition:height 0.4s;background:${i===idx?'var(--sage)':v>0?'var(--sage-pale)':'var(--beige-pale)'};`;
+    chart.appendChild(bar);
+  });
+}
+
+function setTodayDate(){
+  const el=document.getElementById('today-date-hero');
+  if(!el) return;
+  el.textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+function init(){
+  loadState();
+  setTodayDate();
+  makeChecklist(DATA.daily,'daily','daily-badge','daily-list');
+  makeChecklist(DATA.daily,'daily','diario-badge','diario-full-list');
+  makeChecklist(DATA.semanal,'semanal','semanal-badge','semanal-list');
+  makeChecklist(DATA.trimestral,'trim','trim-badge','trim-list');
+  makeChecklist(DATA.semestral,'sem','sem-badge','sem-list');
+  makeChecklist(DATA.quartos,'quartos','quartos-badge','quartos-list');
+  makeChecklist(DATA.salas,'salas','salas-badge','salas-list');
+  makeChecklist(DATA.cozinha,'cozinha','cozinha-badge','cozinha-list');
+  makeChecklist(DATA.banheiros,'banh','banh-badge','banh-list');
+  makeChecklist(DATA.externos,'ext','ext-badge','ext-list');
+  renderWeekPreview(1);
+  buildAgenda();
+  buildLaundry();
+  buildOrgSteps();
+  buildWeekDays();
+  buildHistChart();
+  updateProgress();
+}
+init();
+</script>
+</body>
+</html>
