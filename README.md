@@ -16,9 +16,9 @@ A paleta de cores foi inspirada em tons de **verde-eucalipto**, **dourado** e **
 
 ## 🖥️ Demo
 
-🔗 **[Acesse o app online](https://SEU-USUARIO.github.io/habitar-a-vida-com-beleza/)**
+🔗 **[Acesse o app online](https://pedromatos007.github.io/habitar-a-vida-com-beleza/)**
 
-> Substitua `SEU-USUARIO` pelo seu nome de usuário do GitHub após o deploy.
+
 
 ---
 
