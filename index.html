@@ -3,35 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Habitar a vida com beleza</title>
+<title>Habitar a vida com beleza — Manual da Casa</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
+<link rel="stylesheet" href="style.css">
+</head>
 :root {
-  --sage-deep: #6B8F7E;
-  --sage: #82A898;
-  --sage-mid: #9DBFB1;
-  --sage-light: #BAD5CB;
-  --sage-pale: #D8EDE7;
-  --sage-ghost: #EFF7F4;
-  --gold: #C9A84C;
-  --gold-light: #E8C97A;
-  --gold-pale: #F5E9C8;
-  --gold-ghost: #FAF4E3;
-  --beige-deep: #C8A882;
-  --beige: #D4B896;
-  --beige-light: #E8D5BC;
-  --beige-pale: #F0E6D6;
-  --beige-ghost: #FAF5EE;
-  --cream: #FDFAF5;
-  --text: #2D3B35;
-  --text-mid: #4A5C54;
-  --text-muted: #8AA098;
-  --border: rgba(100,150,130,0.12);
-  --border-gold: rgba(180,150,60,0.25);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --shadow: 0 1px 4px rgba(100,150,130,0.07), 0 2px 8px rgba(100,150,130,0.04);
-  --shadow-md: 0 4px 20px rgba(100,150,130,0.11);
+  --forest:      #18302A;
+  --sage-deep:   #234038;
+  --sage:        #366358;
+  --sage-mid:    #4F8072;
+  --sage-light:  #74A294;
+  --sage-pale:   #BAD5CF;
+  --sage-ghost:  #EDF5F3;
+  --gold-deep:   #8A6B1C;
+  --gold:        #AA8824;
+  --gold-mid:    #C0A040;
+  --gold-light:  #D4B858;
+  --gold-warm:   #E8CC7A;
+  --gold-pale:   #F0DFA8;
+  --gold-ghost:  #FAF3E2;
+  --cream:       #FDFAF4;
+  --beige-pale:  #F5EFE6;
+  --beige-light: #EAE0D0;
+  --beige:       #D0B898;
+  --beige-deep:  #A8886A;
+  --text:        #18281E;
+  --text-mid:    #345046;
+  --text-muted:  #789088;
+  --text-light:  #A8C4BC;
+  --border:      rgba(52,100,86,0.09);
+  --border-mid:  rgba(52,100,86,0.16);
+  --border-gold: rgba(170,136,36,0.2);
+  --shadow-xs:   0 1px 3px rgba(20,44,36,0.05);
+  --shadow-sm:   0 2px 8px rgba(20,44,36,0.08), 0 1px 3px rgba(20,44,36,0.04);
+  --shadow:      0 4px 16px rgba(20,44,36,0.1), 0 2px 6px rgba(20,44,36,0.05);
+  --shadow-md:   0 8px 32px rgba(20,44,36,0.12), 0 4px 12px rgba(20,44,36,0.07);
+  --shadow-lg:   0 20px 56px rgba(20,44,36,0.16), 0 8px 20px rgba(20,44,36,0.1);
+  --shadow-gold: 0 4px 16px rgba(170,136,36,0.3);
+  --radius-xs:   6px;
+  --radius-sm:   10px;
+  --radius:      14px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --card-bg:     #FFFFFF;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -41,651 +55,707 @@ body {
   background: var(--cream);
   color: var(--text);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* STRIPE PATTERN */
 body::before {
   content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: repeating-linear-gradient(
-    to right,
-    transparent,
-    transparent 28px,
-    rgba(120,170,150,0.022) 28px,
-    rgba(120,170,150,0.022) 56px
-  );
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: repeating-linear-gradient(to right, transparent, transparent 40px, rgba(52,100,86,0.012) 40px, rgba(52,100,86,0.012) 80px);
+  pointer-events: none; z-index: 0;
 }
 
 .app { display:flex; min-height:100vh; position:relative; z-index:1; }
 
-/* ── SIDEBAR ── */
-.sidebar {
-  width: 256px;
-  background: var(--sage-deep);
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0; left: 0; height: 100vh;
-  overflow-y: auto;
-  z-index: 100;
-  border-right: 1px solid rgba(255,255,255,0.06);
+/* ══ LOGIN OVERLAY ══ */
+.login-overlay {
+  position: fixed; inset: 0;
+  background: linear-gradient(145deg, #18302A 0%, #1D3832 45%, #132220 100%);
+  z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.4s ease;
 }
-.sidebar::after {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 1px; height: 100%;
-  background: linear-gradient(to bottom, rgba(201,168,76,0.35), transparent, rgba(201,168,76,0.15));
-}
+.login-overlay.hidden { display: none; }
 
-/* LOGO */
-.logo-area {
-  padding: 28px 22px 22px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.logo { display:flex; align-items:center; gap:12px; }
-.logo-icon {
-  width: 42px; height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-  display: flex; align-items:center; justify-content:center;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(201,168,76,0.35);
-}
-.logo-icon svg { width:20px; height:20px; fill: var(--sage-deep); }
-.logo-text { line-height:1.2; }
-.logo-text strong {
-  font-family: 'Playfair Display', serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gold-light);
-  letter-spacing: 0.1px;
-  display: block;
-  line-height: 1.25;
-}
-.logo-text span {
-  font-size: 10px;
-  color: rgba(255,255,255,0.45);
-  text-transform: uppercase;
-  letter-spacing: 1.8px;
-  font-weight: 300;
-}
-.tagline {
-  margin-top: 12px;
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 11.5px;
-  color: rgba(232,201,122,0.65);
-  letter-spacing: 0.3px;
-}
-
-/* NAV */
-.nav { padding: 14px 12px; flex:1; }
-.nav-section-title {
-  font-size: 9.5px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,0.3);
-  padding: 14px 10px 6px;
-  font-weight: 700;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255,255,255,0.65);
-  transition: all 0.18s;
-  margin-bottom: 1px;
-  letter-spacing: 0.1px;
-}
-.nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
-.nav-item.active {
-  background: rgba(201,168,76,0.18);
-  color: var(--gold-light);
-  font-weight: 700;
-  border-left: 2px solid var(--gold);
-  padding-left: 10px;
-}
-.nav-item .nav-icon { font-size:15px; width:20px; text-align:center; opacity:0.9; }
-.nav-badge {
-  margin-left: auto;
-  background: var(--gold);
-  color: var(--sage-deep);
-  font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 20px;
-  font-weight: 700;
-}
-
-/* SIDEBAR FOOTER */
-.sidebar-footer {
-  padding: 18px 20px;
-  border-top: 1px solid rgba(255,255,255,0.07);
-}
-.progress-label {
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 7px;
-  display:flex; justify-content:space-between;
-}
-.progress-label strong { color: var(--gold-light); }
-.progress-bar-bg {
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px; height: 5px; overflow:hidden;
-}
-.progress-bar-fill {
-  height: 5px; border-radius: 20px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  transition: width 0.4s ease;
-}
-.streak {
-  display:flex; align-items:center; gap:6px;
-  margin-top: 10px;
-  font-size: 12px;
-  color: var(--gold-light);
-  font-weight: 700;
-}
-.streak span { color: rgba(255,255,255,0.5); font-weight:400; }
-
-/* ── MAIN ── */
-.main { margin-left: 256px; flex:1; padding: 36px 40px; }
-
-/* PAGE HEADER */
-.page-header { margin-bottom: 30px; }
-.page-header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--sage-deep);
-  letter-spacing: -0.5px;
-}
-.page-header p { font-size: 14px; color: var(--text-muted); margin-top: 5px; font-weight: 300; letter-spacing: 0.2px; }
-
-/* HERO */
-.today-hero {
-  background: var(--sage-deep);
-  border-radius: var(--radius);
-  padding: 28px 32px;
-  margin-bottom: 24px;
+.login-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: 44px 40px;
+  max-width: 460px; width: 100%;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
   position: relative;
   overflow: hidden;
 }
-.today-hero::before {
+.login-card::before {
   content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: repeating-linear-gradient(
-    to right,
-    transparent, transparent 18px,
-    rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 36px
-  );
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-pale), var(--gold-light), var(--gold-mid), var(--gold-light), var(--gold-pale), transparent);
 }
-.today-hero::after {
-  content: '— Manual da Casa';
+
+.login-logo-wrap {
+  width: 84px; height: 84px;
+  border-radius: 18px; overflow: hidden;
+  margin: 0 auto 22px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+.login-logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.login-brand h1 {
   font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 12px;
-  color: rgba(201,168,76,0.4);
-  position: absolute;
-  bottom: 16px; right: 24px;
-  letter-spacing: 0.5px;
+  font-size: 20px; font-weight: 700;
+  color: var(--forest); letter-spacing: -0.3px; margin-bottom: 5px;
 }
-.today-hero h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--gold-light);
-  position: relative;
+.login-brand span {
+  font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: 2.2px; color: var(--text-muted); font-weight: 300;
 }
-.today-hero p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 4px; font-weight: 300; position:relative; }
+
+.login-gold-line {
+  height: 1px; margin: 22px 0;
+  background: linear-gradient(90deg, transparent, var(--gold-pale), var(--gold-mid), var(--gold-pale), transparent);
+}
+
+.login-profiles-title {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 12px;
+}
+.profiles-grid { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+.profile-chip {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 16px; border-radius: 30px;
+  border: 1.5px solid var(--border-mid);
+  cursor: pointer; transition: all 0.15s ease;
+  background: var(--sage-ghost);
+}
+.profile-chip:hover { border-color: var(--sage); background: var(--sage-pale); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.profile-avatar-chip {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: white; flex-shrink: 0;
+}
+.profile-chip-name { font-size: 13px; font-weight: 600; color: var(--text-mid); }
+
+.login-divider-or {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; color: var(--text-muted); margin: 16px 0;
+}
+.login-divider-or::before, .login-divider-or::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.login-form { display: flex; gap: 8px; }
+.login-form input {
+  flex: 1; padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-mid);
+  font-size: 14px; font-family: 'Lato', sans-serif;
+  outline: none; transition: all 0.15s;
+  background: var(--sage-ghost); color: var(--text);
+}
+.login-form input:focus {
+  border-color: var(--sage); background: white;
+  box-shadow: 0 0 0 3px rgba(52,100,86,0.08);
+}
+.login-form input::placeholder { color: var(--text-light); }
+
+.login-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--sage-deep), var(--sage));
+  color: white; border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: all 0.15s; font-family: 'Lato', sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(52,100,86,0.28);
+}
+.login-btn:hover { background: linear-gradient(135deg, var(--forest), var(--sage-deep)); transform: translateY(-1px); }
+
+.login-footnote { font-size: 11px; color: var(--text-muted); margin-top: 18px; font-weight: 300; }
+.login-skip {
+  display: inline-block; margin-top: 10px;
+  font-size: 11.5px; color: var(--text-muted); cursor: pointer;
+  text-decoration: underline; text-decoration-style: dotted;
+  transition: color 0.15s;
+}
+.login-skip:hover { color: var(--sage); }
+
+/* ══ TOAST ══ */
+.toast {
+  position: fixed; bottom: 28px; right: 28px;
+  background: var(--forest); color: white;
+  padding: 12px 18px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; z-index: 9999;
+  transform: translateY(80px); opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+  display: flex; align-items: center; gap: 8px;
+  max-width: 300px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ══ SIDEBAR ══ */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #1C3432 0%, #182C28 55%, #132220 100%);
+  display: flex; flex-direction: column;
+  position: fixed; top:0; left:0; height:100vh;
+  overflow-y: auto; z-index: 100;
+}
+.sidebar::after {
+  content: ''; position: absolute; top:0; right:0; width:1px; height:100%;
+  background: linear-gradient(to bottom, rgba(192,160,64,0) 0%, rgba(192,160,64,0.5) 16%, rgba(192,160,64,0.2) 65%, rgba(192,160,64,0) 100%);
+}
+
+.logo-area {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.055);
+  background: rgba(0,0,0,0.12);
+}
+.logo { display:flex; align-items:center; gap:13px; }
+.logo-icon {
+  width: 48px; height: 48px; border-radius: 11px; overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+}
+.logo-icon img { width:100%; height:100%; object-fit:cover; }
+.logo-text { line-height:1.2; }
+.logo-text strong { font-family:'Playfair Display',serif; font-size:12.5px; font-weight:700; color:var(--gold-warm); letter-spacing:0.1px; display:block; line-height:1.3; }
+.logo-text span { font-size:9px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:2.2px; font-weight:300; }
+.tagline { margin-top:12px; font-family:'Playfair Display',serif; font-style:italic; font-size:10.5px; color:rgba(232,204,122,0.44); letter-spacing:0.3px; }
+
+.nav { padding:10px 10px; flex:1; }
+.nav-section-title { font-size:9px; text-transform:uppercase; letter-spacing:2.4px; color:rgba(255,255,255,0.2); padding:18px 12px 6px; font-weight:700; }
+.nav-item { display:flex; align-items:center; gap:9px; padding:9px 12px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; font-weight:400; color:rgba(255,255,255,0.5); transition:all 0.17s ease; margin-bottom:1px; }
+.nav-item:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.86); }
+.nav-item.active { background:rgba(192,160,64,0.15); color:var(--gold-warm); font-weight:600; border-left:2px solid var(--gold-mid); padding-left:10px; }
+.nav-item .nav-icon { font-size:14px; width:20px; text-align:center; opacity:0.85; }
+.nav-badge { margin-left:auto; background:var(--gold-mid); color:var(--forest); font-size:10px; padding:2px 7px; border-radius:20px; font-weight:700; }
+
+.sidebar-footer {
+  padding: 16px 18px 18px;
+  border-top: 1px solid rgba(255,255,255,0.055);
+  background: rgba(0,0,0,0.12);
+}
+.sidebar-user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background 0.15s; margin-bottom: 14px;
+}
+.sidebar-user:hover { background: rgba(255,255,255,0.07); }
+.sidebar-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.sidebar-user-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.88); }
+.sidebar-user-meta { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+.sidebar-user-divider { height:1px; background:rgba(255,255,255,0.07); margin-bottom:12px; }
+
+.progress-label { font-size:10.5px; color:rgba(255,255,255,0.32); margin-bottom:8px; display:flex; justify-content:space-between; }
+.progress-label strong { color:var(--gold-light); }
+.progress-bar-bg { background:rgba(255,255,255,0.07); border-radius:20px; height:4px; overflow:hidden; }
+.progress-bar-fill { height:4px; border-radius:20px; background:linear-gradient(90deg,var(--gold-mid),var(--gold-warm)); transition:width 0.5s cubic-bezier(0.4,0,0.2,1); box-shadow:0 0 8px rgba(192,160,64,0.45); }
+.streak { display:flex; align-items:center; gap:6px; margin-top:11px; font-size:12px; color:var(--gold-light); font-weight:600; }
+.streak span { color:rgba(255,255,255,0.38); font-weight:300; }
+
+/* ══ MAIN ══ */
+.main { margin-left:260px; flex:1; padding:38px 44px; }
+
+.page-header { margin-bottom:30px; }
+.page-header h1 { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--forest); letter-spacing:-0.5px; line-height:1.15; }
+.page-header p { font-size:13.5px; color:var(--text-muted); margin-top:6px; font-weight:300; letter-spacing:0.1px; }
+
+/* HERO */
+.today-hero {
+  background: linear-gradient(130deg, #1B3230 0%, #243E38 45%, #1C3430 100%);
+  border-radius: var(--radius-lg); padding: 30px 34px; margin-bottom: 26px;
+  position: relative; overflow: hidden; box-shadow: var(--shadow-md);
+}
+.today-hero::before {
+  content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
+  background:
+    radial-gradient(ellipse at 8% 60%, rgba(192,160,64,0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 92% 15%, rgba(52,100,86,0.22) 0%, transparent 45%),
+    repeating-linear-gradient(to right, transparent, transparent 22px, rgba(255,255,255,0.018) 22px, rgba(255,255,255,0.018) 44px);
+}
+.today-hero::after { content:'— Manual da Casa'; font-family:'Playfair Display',serif; font-style:italic; font-size:10.5px; color:rgba(192,160,64,0.3); position:absolute; bottom:17px; right:24px; letter-spacing:0.8px; }
+.today-hero h2 { font-family:'Playfair Display',serif; font-size:23px; font-weight:700; color:var(--gold-warm); position:relative; letter-spacing:-0.2px; }
+.today-hero p { font-size:12.5px; color:rgba(255,255,255,0.42); margin-top:4px; font-weight:300; position:relative; letter-spacing:0.2px; }
 
 /* GRIDS */
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
-.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
-.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:22px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:22px; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:26px; }
 
 /* CARDS */
-.card {
-  background: #FFFFFF;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  padding: 22px;
-  box-shadow: var(--shadow);
-}
-.card-gold {
-  background: var(--gold-ghost);
-  border: 1px solid var(--border-gold);
-}
-.card-sage {
-  background: var(--sage-ghost);
-  border: 1px solid rgba(90,120,90,0.15);
-}
-.card-header {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom: 18px;
-}
-.card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--sage-deep);
-}
-.card-subtitle { font-size: 12px; color: var(--text-muted); font-weight: 300; }
+.card { background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); padding:24px; box-shadow:var(--shadow-sm); transition:box-shadow 0.22s ease; }
+.card:hover { box-shadow:var(--shadow); }
+.card-gold { background:var(--gold-ghost); border:1px solid var(--border-gold); }
+.card-sage { background:var(--sage-ghost); border:1px solid rgba(52,100,86,0.11); }
+.card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.card-title { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; color:var(--forest); letter-spacing:-0.1px; }
+.card-subtitle { font-size:11.5px; color:var(--text-muted); font-weight:300; margin-top:2px; }
 
 /* STAT CARDS */
 .stat-card {
-  background: #fff;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  padding: 20px 18px;
-  text-align: center;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background:var(--card-bg); border-radius:var(--radius);
+  border:1px solid var(--border); padding:22px 16px 18px;
+  text-align:center; box-shadow:var(--shadow-sm);
+  transition:all 0.22s ease; position:relative; overflow:hidden;
 }
-.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.stat-icon { font-size: 22px; margin-bottom: 8px; }
-.stat-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -1px;
-}
-.stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 3px; font-weight: 700; }
+.stat-card-accent { position:absolute; top:0; left:0; right:0; height:3px; border-radius:var(--radius) var(--radius) 0 0; }
+.stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.stat-icon { font-size:20px; margin-bottom:10px; }
+.stat-value { font-family:'Playfair Display',serif; font-size:32px; font-weight:700; letter-spacing:-1.5px; line-height:1; }
+.stat-label { font-size:9.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; margin-top:7px; font-weight:700; }
 
 /* CHECKLIST */
 .checklist { list-style:none; }
-.checklist li {
-  display:flex; align-items:flex-start; gap:11px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13.5px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  color: var(--text-mid);
-  letter-spacing: 0.1px;
-}
+.checklist li { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(--border); font-size:13.5px; cursor:pointer; transition:all 0.18s ease; color:var(--text-mid); line-height:1.45; }
 .checklist li:last-child { border-bottom:none; }
-.checklist li.done { opacity:0.4; text-decoration:line-through; }
-.check-box {
-  width: 19px; height: 19px;
-  border-radius: 5px;
-  border: 1.5px solid var(--sage-light);
-  flex-shrink: 0;
-  display:flex; align-items:center; justify-content:center;
-  transition: all 0.18s;
-  margin-top: 1px;
-  background: transparent;
-}
-.checklist li.done .check-box {
-  background: var(--sage);
-  border-color: var(--sage);
-}
-.check-tick { color: white; font-size: 11px; display:none; }
+.checklist li:hover { color:var(--text); }
+.checklist li.done { opacity:0.35; text-decoration:line-through; }
+.check-box { width:18px; height:18px; border-radius:50%; border:1.5px solid var(--sage-pale); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.18s ease; margin-top:2px; background:transparent; }
+.checklist li.done .check-box { background:var(--sage); border-color:var(--sage); box-shadow:0 2px 6px rgba(54,99,88,0.32); }
+.check-tick { color:white; font-size:10px; display:none; }
 .checklist li.done .check-tick { display:block; }
+
+/* PLANNER */
+.planner-card { background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); padding:26px; box-shadow:var(--shadow-sm); }
+.planner-header { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:var(--forest); margin-bottom:22px; padding-bottom:14px; border-bottom:1px solid var(--gold-pale); }
+.planner-week { margin-bottom:26px; }
+.planner-week-title { font-family:'Playfair Display',serif; font-size:13.5px; font-weight:600; color:var(--gold); margin-bottom:14px; }
+.planner-days { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+.planner-day { background:var(--sage-ghost); border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px; min-height:100px; transition:border-color 0.15s, box-shadow 0.15s; }
+.planner-day:focus-within { border-color:var(--sage-light); box-shadow:0 0 0 3px rgba(52,100,86,0.07); }
+.planner-day-name { font-size:10px; font-weight:700; color:var(--sage); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:3px; }
+.planner-day-date { font-size:10px; color:var(--text-muted); margin-bottom:8px; font-weight:300; }
+.planner-day-content { font-size:12px; color:var(--text-mid); line-height:1.6; min-height:60px; outline:none; }
+.planner-section { background:var(--gold-ghost); border:1px solid var(--border-gold); border-radius:var(--radius-sm); padding:15px; margin-top:13px; transition:border-color 0.15s; }
+.planner-section:focus-within { border-color:var(--gold-light); }
+.planner-section-title { font-size:10px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:8px; }
+.planner-section-content { font-size:12.5px; color:var(--text-mid); line-height:1.7; min-height:50px; outline:none; }
+
+/* MANUAL */
+.manual-section { background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); padding:26px; margin-bottom:16px; box-shadow:var(--shadow-sm); }
+.manual-section-title { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--forest); margin-bottom:16px; padding-bottom:11px; border-bottom:1px solid var(--border); }
+.manual-subsection { margin-bottom:18px; }
+.manual-subsection-title { font-size:11.5px; font-weight:700; color:var(--gold); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.9px; }
+.manual-info-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.manual-info-item { background:var(--sage-ghost); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; }
+.manual-info-label { font-size:9.5px; font-weight:700; color:var(--sage-mid); text-transform:uppercase; letter-spacing:1.3px; margin-bottom:5px; }
+.manual-info-value { font-size:13px; color:var(--text-mid); line-height:1.6; font-weight:300; }
+.manual-list { list-style:none; padding-left:0; }
+.manual-list li { padding:8px 0; padding-left:22px; position:relative; font-size:13px; color:var(--text-mid); line-height:1.6; font-weight:300; border-bottom:1px solid var(--border); }
+.manual-list li:last-child { border-bottom:none; }
+.manual-list li::before { content:'✓'; position:absolute; left:0; top:9px; color:var(--sage); font-weight:700; font-size:12px; }
 
 /* WEEK TABS */
 .week-tabs { display:flex; gap:6px; margin-bottom:18px; flex-wrap:wrap; }
-.week-tab {
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px; font-weight: 700;
-  cursor: pointer;
-  border: 1.5px solid var(--border);
-  color: var(--text-muted);
-  background: transparent;
-  transition: all 0.15s;
-  letter-spacing: 0.3px;
-}
-.week-tab.active { background: var(--sage); border-color: var(--sage); color: white; }
-.week-tab:hover:not(.active) { border-color: var(--sage-mid); color: var(--sage); }
+.week-tab { padding:5px 13px; border-radius:20px; font-size:11.5px; font-weight:600; cursor:pointer; border:1.5px solid var(--border-mid); color:var(--text-muted); background:transparent; transition:all 0.15s ease; }
+.week-tab.active { background:var(--sage); border-color:var(--sage); color:white; box-shadow:0 2px 8px rgba(54,99,88,0.28); }
+.week-tab:hover:not(.active) { border-color:var(--sage-mid); color:var(--sage); background:var(--sage-ghost); }
 
 /* BADGES */
-.badge { display:inline-flex; align-items:center; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:0.3px; }
-.badge-sage { background: var(--sage-ghost); color: var(--sage); border: 1px solid var(--sage-pale); }
-.badge-gold { background: var(--gold-ghost); color: var(--gold); border: 1px solid var(--gold-pale); }
-.badge-beige { background: var(--beige-pale); color: var(--beige-deep); border: 1px solid var(--beige-light); }
-.badge-cream { background: var(--cream); color: var(--text-muted); border: 1px solid var(--border); }
+.badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:0.3px; }
+.badge-sage { background:var(--sage-ghost); color:var(--sage); border:1px solid rgba(52,100,86,0.14); }
+.badge-gold { background:var(--gold-ghost); color:var(--gold); border:1px solid var(--border-gold); }
+.badge-beige { background:var(--beige-pale); color:var(--beige-deep); border:1px solid var(--beige-light); }
+.badge-cream { background:var(--cream); color:var(--text-muted); border:1px solid var(--border); }
 
 /* SECTION */
 .section { display:none; }
-.section.active { display:block; animation: fadeIn 0.25s ease; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.section.active { display:block; animation:fadeIn 0.28s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
 
 /* TIMELINE */
 .timeline { position:relative; padding-left:22px; }
-.timeline::before { content:''; position:absolute; left:8px; top:8px; bottom:8px; width:1.5px; background:var(--sage-pale); }
+.timeline::before { content:''; position:absolute; left:7px; top:8px; bottom:8px; width:1.5px; background:linear-gradient(to bottom, var(--sage-pale), rgba(186,213,207,0.15)); }
 .timeline-item { position:relative; margin-bottom:20px; }
-.timeline-dot { position:absolute; left:-22px; top:4px; width:14px; height:14px; border-radius:50%; border:2.5px solid white; box-shadow:0 0 0 2px var(--sage-pale); }
-.timeline-title { font-size:13px; font-weight:700; color:var(--sage-deep); }
-.timeline-desc { font-size:12px; color:var(--text-muted); margin-top:2px; font-weight:300; }
+.timeline-dot { position:absolute; left:-22px; top:4px; width:14px; height:14px; border-radius:50%; border:2px solid white; box-shadow:0 0 0 2px var(--sage-pale), 0 2px 5px rgba(20,44,36,0.1); }
+.timeline-title { font-size:13px; font-weight:700; color:var(--forest); }
+.timeline-desc { font-size:12px; color:var(--text-muted); margin-top:2px; font-weight:300; line-height:1.5; }
 
 /* LAUNDRY */
 .laundry-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-.laundry-col h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--sage-deep);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--gold-pale);
-}
+.laundry-col h3 { font-family:'Playfair Display',serif; font-size:13.5px; font-weight:600; color:var(--forest); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--gold-pale); }
 .laundry-symbol { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:12px; color:var(--text-muted); font-weight:300; }
-.sym-box {
-  width:34px; height:34px;
-  border: 1px solid var(--sage-pale);
-  border-radius: 8px;
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; font-size:15px;
-  background: var(--sage-ghost);
-  color: var(--sage);
-}
+.sym-box { width:34px; height:34px; border:1px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; background:var(--sage-ghost); color:var(--sage); }
 
 /* ORG STEPS */
-.org-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
-.org-step {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.org-step:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
-.org-step-num {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--sage-deep);
-  font-weight: 700;
-  font-size: 14px;
-  display:flex; align-items:center; justify-content:center;
-  margin: 0 auto 10px;
-  font-family: 'Playfair Display', serif;
-  box-shadow: 0 2px 8px rgba(201,168,76,0.3);
-}
-.org-step-title { font-size:13px; font-weight:700; color:var(--sage-deep); font-family:'Playfair Display',serif; }
-.org-step-desc { font-size:11px; color:var(--text-muted); margin-top:4px; font-weight:300; }
+.org-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; }
+.org-step { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:20px 16px; text-align:center; transition:all 0.22s ease; position:relative; overflow:hidden; }
+.org-step::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--gold-light), transparent); opacity:0; transition:opacity 0.2s; }
+.org-step:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--border-mid); }
+.org-step:hover::before { opacity:1; }
+.org-step-num { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--gold-mid),var(--gold-light)); color:var(--forest); font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-family:'Playfair Display',serif; box-shadow:0 3px 10px rgba(170,136,36,0.35); }
+.org-step-title { font-size:13px; font-weight:700; color:var(--forest); font-family:'Playfair Display',serif; margin-bottom:4px; }
+.org-step-desc { font-size:11px; color:var(--text-muted); font-weight:300; line-height:1.4; }
 
 /* ROOM CARD */
-.room-card { border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; box-shadow:var(--shadow); }
-.room-card-header {
-  padding: 18px 22px;
-  font-family: 'Playfair Display', serif;
-  font-weight:600; font-size:15px;
-  display:flex; align-items:center; gap:10px;
-}
-.room-card-body { padding:18px 22px; background:white; }
+.room-card { border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; box-shadow:var(--shadow-sm); }
+.room-card-header { padding:18px 24px; font-family:'Playfair Display',serif; font-weight:600; font-size:15px; display:flex; align-items:center; gap:10px; }
+.room-card-body { padding:20px 24px; background:var(--card-bg); }
 
 /* BUTTONS */
-.btn { padding:9px 20px; border-radius:var(--radius-sm); border:none; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.15s; letter-spacing:0.3px; font-family:'Lato',sans-serif; }
-.btn-primary { background:var(--sage); color:white; }
+.btn { padding:9px 20px; border-radius:var(--radius-sm); border:none; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.15s ease; letter-spacing:0.3px; font-family:'Lato',sans-serif; }
+.btn-primary { background:var(--sage); color:white; box-shadow:0 2px 8px rgba(54,99,88,0.24); }
 .btn-primary:hover { background:var(--sage-deep); }
-.btn-gold { background:var(--gold); color:var(--sage-deep); }
-.btn-gold:hover { background:var(--gold-light); }
+.btn-gold { background:var(--gold); color:white; box-shadow:var(--shadow-gold); }
+.btn-gold:hover { background:var(--gold-deep); }
 
 /* INPUT */
-.input-row { display:flex; gap:8px; margin-top:14px; }
-.input-row input {
-  flex:1; padding:9px 14px;
-  border-radius:var(--radius-sm);
-  border:1px solid var(--sage-pale);
-  font-size:13px;
-  background:var(--sage-ghost);
-  color:var(--text);
-  outline:none;
-  font-family:'Lato',sans-serif;
-}
-.input-row input:focus { border-color:var(--sage); background:white; }
+.input-row { display:flex; gap:8px; margin-top:16px; }
+.input-row input { flex:1; padding:10px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--border-mid); font-size:13px; background:var(--sage-ghost); color:var(--text); outline:none; font-family:'Lato',sans-serif; transition:all 0.15s ease; }
+.input-row input:focus { border-color:var(--sage); background:white; box-shadow:0 0 0 3px rgba(52,100,86,0.08); }
+.input-row input::placeholder { color:var(--text-light); }
 
 /* WEEK DAYS */
-.week-indicator { display:flex; gap:7px; margin-bottom:22px; }
-.day-chip {
-  width:38px; height:38px;
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:12px; font-weight:700;
-  color:var(--text-muted);
-  cursor:pointer;
-  border:1.5px solid var(--border);
-  transition:all 0.15s;
-  flex-direction:column;
-}
-.day-chip.today { background:var(--sage); color:white; border-color:var(--sage); }
+.week-indicator { display:flex; gap:8px; margin-bottom:24px; }
+.day-chip { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700; color:var(--text-muted); cursor:pointer; border:1.5px solid var(--border-mid); transition:all 0.15s ease; flex-direction:column; }
+.day-chip.today { background:var(--sage); color:white; border-color:var(--sage); box-shadow:0 3px 10px rgba(54,99,88,0.3); }
 .day-chip.done-day { background:var(--gold-ghost); color:var(--gold); border-color:var(--gold-pale); }
-.day-chip-label { font-size:8px; margin-top:1px; font-weight:400; }
+.day-chip-label { font-size:8px; margin-top:1px; font-weight:400; opacity:0.8; }
 
 /* MISC */
-.divider { height:1px; background:var(--border); margin:20px 0; }
+.divider { height:1px; background:var(--border); margin:22px 0; }
 .flex-row { display:flex; align-items:center; gap:10px; }
 .ml-auto { margin-left:auto; }
 .text-muted { color:var(--text-muted); font-size:12px; }
 
 /* AGENDA WEEK CARDS */
-.agenda-week-card {
-  background:white;
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-  padding:16px 20px;
-  cursor:pointer;
-  transition:all 0.18s;
-  box-shadow:var(--shadow);
-  display:flex; align-items:center; gap:14px;
-  margin-bottom:10px;
-}
-.agenda-week-card:hover { transform:translateX(4px); border-color:var(--sage-light); }
+.agenda-week-card { background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); padding:16px 20px; cursor:pointer; transition:all 0.18s ease; box-shadow:var(--shadow-xs); display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+.agenda-week-card:hover { transform:translateX(4px); border-color:var(--sage-light); box-shadow:var(--shadow-sm); }
 .agenda-week-card.current { border-left:3px solid var(--gold); padding-left:17px; background:var(--gold-ghost); }
-.agenda-week-icon { font-size:24px; }
-.agenda-week-name { font-family:'Playfair Display',serif; font-size:14px; font-weight:600; color:var(--sage-deep); }
-.agenda-week-sub { font-size:12px; color:var(--text-muted); font-weight:300; }
+.agenda-week-icon { font-size:22px; }
+.agenda-week-name { font-family:'Playfair Display',serif; font-size:14px; font-weight:600; color:var(--forest); }
+.agenda-week-sub { font-size:12px; color:var(--text-muted); font-weight:300; margin-top:1px; }
 
 /* HIST CHART */
-#hist-chart { display:flex; gap:7px; align-items:flex-end; height:64px; width:100%; }
+#hist-chart { display:flex; gap:8px; align-items:flex-end; height:64px; width:100%; }
+.hist-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.hist-bar { width:100%; border-radius:5px 5px 0 0; transition:height 0.5s ease; }
+.hist-bar-pct { font-size:9px; color:var(--text-muted); font-weight:700; }
 
 /* SCROLLBAR */
-::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar { width:4px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--sage-pale); border-radius:10px; }
+::-webkit-scrollbar-thumb:hover { background:var(--sage-light); }
 
 /* GOLD DIVIDER */
-.gold-line {
-  height:2px;
-  background:linear-gradient(90deg, transparent, var(--gold-pale), var(--gold-light), var(--gold-pale), transparent);
-  margin:24px 0;
-  border-radius:2px;
-}
+.gold-line { height:1px; background:linear-gradient(90deg, transparent, var(--gold-pale), var(--gold-light), var(--gold-pale), transparent); margin:28px 0; border-radius:2px; }
 
 /* TIP BOX */
-.tip-box {
-  background:var(--gold-ghost);
-  border:1px solid var(--gold-pale);
-  border-left:3px solid var(--gold);
-  border-radius:var(--radius-sm);
-  padding:14px 16px;
-  font-size:13px;
-  color:var(--text-mid);
-  line-height:1.7;
-}
-.tip-box strong { color:var(--sage-deep); font-weight:700; }
+.tip-box { background:var(--gold-ghost); border:1px solid var(--border-gold); border-left:3px solid var(--gold); border-radius:var(--radius-sm); padding:16px 18px; font-size:13px; color:var(--text-mid); line-height:1.7; }
+.tip-box strong { color:var(--forest); font-weight:700; }
 
-/* ══════════════════════════════════════
-   MOBILE — topbar + drawer + bottom nav
-══════════════════════════════════════ */
+/* ══ MOBILE ══ */
 .mobile-topbar {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 56px;
-  background: var(--sage-deep);
-  z-index: 200;
-  align-items: center;
-  padding: 0 16px;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display:none; position:fixed; top:0; left:0; right:0; height:56px;
+  background:linear-gradient(90deg, #1B3230, #1E3830);
+  z-index:200; align-items:center; padding:0 16px; gap:12px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2);
 }
-.mobile-topbar-title {
-  flex: 1;
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--gold-light);
-  line-height: 1.2;
+.mobile-topbar-title { flex:1; font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--gold-warm); line-height:1.2; }
+.mobile-topbar-sub { font-size:9px; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:1.5px; display:block; font-family:'Lato',sans-serif; font-weight:300; }
+.mobile-user-avatar {
+  width:32px; height:32px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700; color:white; flex-shrink:0;
+  cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  background:var(--sage);
 }
-.mobile-topbar-sub {
-  font-size: 9px;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  display: block;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-}
-.hamburger {
-  width: 36px; height: 36px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.08);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 0;
-  flex-shrink: 0;
-  transition: background 0.15s;
-}
-.hamburger:active { background: rgba(255,255,255,0.15); }
-.hamburger span {
-  display: block;
-  width: 18px; height: 1.5px;
-  background: var(--gold-light);
-  border-radius: 2px;
-  transition: all 0.25s;
-  transform-origin: center;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-.mobile-progress-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(201,168,76,0.15);
-  border-radius: 20px;
-  padding: 4px 10px;
-  flex-shrink: 0;
-}
-.mobile-progress-pct {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--gold-light);
-}
-.drawer-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 150;
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-.drawer-overlay.open { display: block; opacity: 1; }
-.bottom-nav {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 62px;
-  background: var(--sage-deep);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  z-index: 200;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 4px;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.bottom-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.15s;
-  flex: 1;
-  max-width: 70px;
-}
-.bottom-nav-item:active { background: rgba(255,255,255,0.08); }
-.bnav-icon { font-size: 20px; line-height: 1; }
-.bnav-label { font-size: 9px; color: rgba(255,255,255,0.45); font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; }
-.bottom-nav-item.active .bnav-icon,
-.bottom-nav-item.active .bnav-label { color: var(--gold-light); }
+.hamburger { width:36px; height:36px; border-radius:8px; background:rgba(255,255,255,0.07); border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:0; flex-shrink:0; transition:background 0.15s; }
+.hamburger:active { background:rgba(255,255,255,0.14); }
+.hamburger span { display:block; width:18px; height:1.5px; background:var(--gold-warm); border-radius:2px; transition:all 0.25s ease; transform-origin:center; }
+.hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-progress-pill { display:flex; align-items:center; gap:6px; background:rgba(192,160,64,0.15); border-radius:20px; padding:4px 10px; flex-shrink:0; }
+.mobile-progress-pct { font-size:11px; font-weight:700; color:var(--gold-warm); }
+.drawer-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150; opacity:0; transition:opacity 0.25s; }
+.drawer-overlay.open { display:block; opacity:1; }
+.bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; height:62px; background:linear-gradient(0deg,#132220,#1B3230); border-top:1px solid rgba(255,255,255,0.07); z-index:200; align-items:center; justify-content:space-around; padding:0 4px; padding-bottom:env(safe-area-inset-bottom,0px); box-shadow:0 -2px 16px rgba(0,0,0,0.15); }
+.bottom-nav-item { display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 10px; border-radius:10px; cursor:pointer; transition:background 0.15s; flex:1; max-width:70px; }
+.bottom-nav-item:active { background:rgba(255,255,255,0.07); }
+.bnav-icon { font-size:20px; line-height:1; }
+.bnav-label { font-size:9px; color:rgba(255,255,255,0.4); font-weight:700; letter-spacing:0.3px; text-transform:uppercase; }
+.bottom-nav-item.active .bnav-icon, .bottom-nav-item.active .bnav-label { color:var(--gold-warm); }
 
-@media(max-width: 768px) {
-  .mobile-topbar { display: flex; }
-  .bottom-nav { display: flex; }
-  .sidebar {
-    position: fixed;
-    top: 56px; left: 0;
-    width: 280px;
-    height: calc(100vh - 56px);
-    transform: translateX(-100%);
-    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-    z-index: 160;
-  }
-  .sidebar.open {
-    transform: translateX(0);
-    box-shadow: 4px 0 24px rgba(0,0,0,0.2);
-  }
-  .main { margin-left: 0; padding: 72px 14px 80px; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
-  .grid-4 { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .laundry-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .org-steps { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .today-hero { padding: 18px 20px; }
-  .today-hero h2 { font-size: 18px; }
-  .today-hero::after { display: none; }
-  .card { padding: 15px; }
-  .card-title { font-size: 14px; }
-  .page-header h1 { font-size: 22px; }
-  .page-header { margin-bottom: 16px; }
-  .stat-value { font-size: 26px; }
-  .stat-card { padding: 14px 10px; }
-  .stat-icon { font-size: 18px; margin-bottom: 4px; }
-  .week-tabs { gap: 5px; }
-  .week-tab { padding: 5px 11px; font-size: 11px; }
-  .week-indicator { gap: 5px; flex-wrap: wrap; }
-  .day-chip { width: 36px; height: 36px; font-size: 11px; }
-  .checklist li { padding: 13px 0; font-size: 14px; }
-  .check-box { width: 22px; height: 22px; flex-shrink: 0; border-radius: 6px; }
-  .room-card-header { padding: 14px 16px; font-size: 13px; }
-  .room-card-body { padding: 14px 16px; }
-  .org-step { padding: 14px 10px; }
-  .org-step-title { font-size: 12px; }
-  .org-step-desc { font-size: 10px; }
-  .org-step-num { width: 30px; height: 30px; font-size: 13px; }
-  .laundry-col h3 { font-size: 13px; }
-  .laundry-symbol { font-size: 11px; gap: 7px; }
-  .sym-box { width: 30px; height: 30px; font-size: 13px; flex-shrink: 0; }
-  .agenda-week-card { padding: 12px 14px; }
-  .agenda-week-name { font-size: 13px; }
-  .timeline { padding-left: 18px; }
-  .timeline-dot { left: -18px; }
-  .input-row input { font-size: 16px; }
-  .tip-box { font-size: 13px; padding: 13px 14px; }
-  .tagline { font-size: 10.5px; }
-  .gold-line { margin: 16px 0; }
+@media(max-width:768px) {
+  .mobile-topbar { display:flex; }
+  .bottom-nav { display:flex; }
+  .sidebar { position:fixed; top:56px; left:0; width:280px; height:calc(100vh - 56px); transform:translateX(-100%); transition:transform 0.28s cubic-bezier(0.4,0,0.2,1); z-index:160; }
+  .sidebar.open { transform:translateX(0); box-shadow:4px 0 28px rgba(0,0,0,0.22); }
+  .main { margin-left:0; padding:72px 14px 80px; }
+  .grid-2, .grid-3 { grid-template-columns:1fr; gap:12px; }
+  .grid-4 { grid-template-columns:1fr 1fr; gap:10px; }
+  .laundry-grid { grid-template-columns:1fr 1fr; gap:12px; }
+  .org-steps { grid-template-columns:1fr 1fr; gap:10px; }
+  .today-hero { padding:18px 20px; }
+  .today-hero h2 { font-size:18px; }
+  .today-hero::after { display:none; }
+  .card { padding:15px; }
+  .card-title { font-size:14px; }
+  .page-header h1 { font-size:22px; }
+  .page-header { margin-bottom:16px; }
+  .stat-value { font-size:26px; }
+  .stat-card { padding:14px 10px; }
+  .stat-icon { font-size:18px; margin-bottom:4px; }
+  .week-tabs { gap:5px; }
+  .week-tab { padding:5px 11px; font-size:11px; }
+  .week-indicator { gap:5px; flex-wrap:wrap; }
+  .day-chip { width:36px; height:36px; font-size:11px; }
+  .checklist li { padding:13px 0; font-size:14px; }
+  .check-box { width:22px; height:22px; flex-shrink:0; border-radius:50%; }
+  .room-card-header { padding:14px 16px; font-size:13px; }
+  .room-card-body { padding:14px 16px; }
+  .org-step { padding:14px 10px; }
+  .org-step-title { font-size:12px; }
+  .org-step-desc { font-size:10px; }
+  .org-step-num { width:30px; height:30px; font-size:13px; }
+  .laundry-col h3 { font-size:13px; }
+  .laundry-symbol { font-size:11px; gap:7px; }
+  .sym-box { width:30px; height:30px; font-size:13px; flex-shrink:0; }
+  .agenda-week-card { padding:12px 14px; }
+  .agenda-week-name { font-size:13px; }
+  .timeline { padding-left:18px; }
+  .timeline-dot { left:-18px; }
+  .input-row input { font-size:16px; }
+  .tip-box { font-size:13px; padding:13px 14px; }
+  .tagline { font-size:10px; }
+  .gold-line { margin:16px 0; }
+  .planner-days { grid-template-columns:1fr; }
+  .manual-info-grid { grid-template-columns:1fr; }
+  .login-card { padding:32px 22px; }
+  .login-brand h1 { font-size:17px; }
+  .login-form { flex-direction:column; }
+  .toast { bottom:76px; right:14px; left:14px; max-width:none; justify-content:center; }
+  .sidebar-actions { gap:4px; }
+  .sidebar-action-btn { font-size:13px; }
+  .cycle-chip { font-size:11.5px; padding:8px 12px; }
+}
+
+/* ══ TABLET (769–1024px) ══ */
+@media(min-width:769px) and (max-width:1024px) {
+  .sidebar { width:220px; }
+  .main { margin-left:220px; padding:28px 26px; }
+  .logo-text strong { font-size:11.5px; }
+  .grid-3 { grid-template-columns:1fr 1fr; }
+  .grid-4 { grid-template-columns:1fr 1fr; gap:14px; }
+  .laundry-grid { grid-template-columns:1fr 1fr; }
+  .org-steps { grid-template-columns:1fr 1fr; }
+  .planner-days { grid-template-columns:repeat(4,1fr); }
+  .page-header h1 { font-size:24px; }
+  .nav-item { font-size:12.5px; padding:8px 10px; }
+  .stat-value { font-size:28px; }
+}
+
+/* ══ LARGE SCREEN (≥1440px) ══ */
+@media(min-width:1440px) {
+  .sidebar { width:280px; }
+  .main { margin-left:280px; padding:44px 60px; }
+}
+
+/* ══ VERY SMALL PHONE (<360px) ══ */
+@media(max-width:360px) {
+  .main { padding:66px 10px 78px; }
+  .stat-value { font-size:22px; }
+  .stat-card { padding:12px 8px; }
+  .stat-icon { font-size:16px; }
+  .page-header h1 { font-size:20px; }
+  .today-hero h2 { font-size:16px; }
+  .today-hero { padding:14px 15px; }
+  .card { padding:12px; }
+  .week-tab { padding:4px 8px; font-size:10.5px; }
+  .day-chip { width:30px; height:30px; font-size:10px; }
+  .checklist li { font-size:13px; gap:9px; }
+  .login-card { padding:22px 14px; }
+  .login-brand h1 { font-size:16px; }
+  .grid-4 { gap:8px; }
+  .sidebar-action-btn { font-size:12px; }
+}
+
+/* ══ LANDSCAPE PHONE ══ */
+@media(max-width:768px) and (orientation:landscape) {
+  .mobile-topbar { height:44px; }
+  .sidebar { top:44px; height:calc(100vh - 44px); }
+  .main { padding:56px 16px 60px; }
+  .bottom-nav { height:50px; }
+  .today-hero { padding:12px 18px; }
+  .today-hero h2 { font-size:16px; }
+  .today-hero::after { display:none; }
+  .grid-4 { grid-template-columns:repeat(4,1fr); }
+  .grid-2 { grid-template-columns:1fr 1fr; }
+  .page-header { margin-bottom:10px; }
+  .page-header h1 { font-size:20px; }
+}
+
+/* ══ PLANNER TODAY HIGHLIGHT ══ */
+.planner-day-today {
+  border-color:var(--sage) !important;
+  box-shadow:0 0 0 2px rgba(54,99,88,0.12), var(--shadow-xs);
+}
+.planner-day-today .planner-day-name { color:var(--sage); }
+.planner-day-today .planner-day-date { color:var(--sage-mid); font-weight:700; }
+body.dark .planner-day-today { border-color:var(--sage) !important; box-shadow:0 0 0 2px rgba(79,168,150,0.2); }
+
+/* ══ TASK DELETE BUTTON ══ */
+.task-delete-btn {
+  margin-left:auto; flex-shrink:0; background:transparent; border:none;
+  cursor:pointer; color:var(--text-light); font-size:18px; line-height:1;
+  padding:2px 5px; border-radius:var(--radius-xs); transition:all 0.15s;
+  opacity:0; pointer-events:none;
+}
+.checklist li:hover .task-delete-btn { opacity:1; pointer-events:all; }
+.task-delete-btn:hover { color:#C0392B; background:rgba(192,57,43,0.09); }
+@media(hover:none) { .task-delete-btn { opacity:0.55; pointer-events:all; } }
+
+/* ══ DARK MODE ══ */
+body.dark {
+  --forest:      #88D4C0;
+  --sage-deep:   #6ABFAB;
+  --sage:        #4FA896;
+  --sage-mid:    #68B8A4;
+  --sage-light:  #88CCBA;
+  --sage-pale:   #2A5045;
+  --sage-ghost:  #152C26;
+  --gold-deep:   #C8A030;
+  --gold:        #C8A030;
+  --gold-mid:    #DCBC5A;
+  --gold-light:  #EAD070;
+  --gold-warm:   #F0DC8C;
+  --gold-pale:   #3A3010;
+  --gold-ghost:  #201A08;
+  --cream:       #0C1C18;
+  --beige-pale:  #112018;
+  --beige-light: #182C22;
+  --beige:       #284840;
+  --beige-deep:  #58967E;
+  --text:        #D8EDE8;
+  --text-mid:    #9CC4B8;
+  --text-muted:  #5A8878;
+  --text-light:  #224038;
+  --border:      rgba(160,210,200,0.09);
+  --border-mid:  rgba(160,210,200,0.17);
+  --border-gold: rgba(200,160,48,0.22);
+  --shadow-xs:   0 1px 3px rgba(0,0,0,0.35);
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.25);
+  --shadow:      0 4px 16px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.35);
+  --shadow-lg:   0 20px 56px rgba(0,0,0,0.65), 0 8px 20px rgba(0,0,0,0.4);
+  --card-bg:     #142620;
+}
+body.dark::before { background: repeating-linear-gradient(to right, transparent, transparent 40px, rgba(160,200,190,0.01) 40px, rgba(160,200,190,0.01) 80px); }
+body.dark .today-hero { background: linear-gradient(130deg, #091510 0%, #0F1E18 45%, #091510 100%); }
+body.dark .sidebar { background: linear-gradient(180deg, #070F0C 0%, #050C09 55%, #030706 100%); }
+body.dark .mobile-topbar { background: linear-gradient(90deg, #091510, #0C1C14); }
+body.dark .bottom-nav { background: linear-gradient(0deg, #030706, #091510); }
+body.dark .login-overlay { background: linear-gradient(145deg, #030706 0%, #091510 45%, #020504 100%); }
+body.dark .login-card { border: 1px solid var(--border-mid); }
+body.dark .profile-chip { background: var(--sage-ghost); border-color: var(--border-mid); }
+body.dark .profile-chip:hover { background: var(--sage-pale); }
+body.dark .login-form input { background: var(--sage-ghost); color: var(--text); border-color: var(--border-mid); }
+body.dark .login-form input:focus { background: #1A2C24; border-color: var(--sage); }
+body.dark .login-brand h1 { color: var(--text); }
+body.dark .week-tab { background: transparent; color: var(--text-muted); border-color: var(--border-mid); }
+body.dark .week-tab.active { background: var(--sage); border-color: var(--sage); color: white; }
+body.dark .input-row input { background: var(--sage-ghost); color: var(--text); border-color: var(--border-mid); }
+body.dark .input-row input:focus { background: #1A2C24; border-color: var(--sage); }
+body.dark .planner-day { background: var(--sage-ghost); }
+body.dark .planner-section { background: var(--gold-ghost); border-color: var(--border-gold); }
+body.dark .tip-box { background: var(--gold-ghost); border-color: var(--border-gold); }
+body.dark .card-gold { background: var(--gold-ghost); border-color: var(--border-gold); }
+body.dark .card-sage { background: var(--sage-ghost); }
+body.dark .manual-info-item { background: var(--sage-ghost); }
+body.dark .agenda-week-card.current { background: var(--gold-ghost); }
+body.dark .day-chip { border-color: var(--border-mid); color: var(--text-muted); }
+body.dark .day-chip.today { background: var(--sage); border-color: var(--sage); color: white; }
+body.dark .day-chip.done-day { background: var(--gold-ghost); color: var(--gold); border-color: var(--gold-pale); }
+body.dark .room-card-header { filter: brightness(0.65) saturate(0.8); }
+body.dark .stat-card { border-color: var(--border-mid); }
+body.dark .cycle-ok { background: var(--sage-ghost); color: var(--sage-light); border-color: var(--border-mid); }
+body.dark .cycle-due { background: #3A1808; color: #FF8A65; border-color: #6A2810; }
+body.dark .cycle-none { background: var(--beige-pale); color: var(--text-muted); border-color: var(--beige-light); }
+
+/* ══ SIDEBAR ACTIONS ══ */
+.sidebar-actions { display:flex; gap:5px; margin-bottom:12px; }
+.sidebar-action-btn {
+  flex:1; padding:7px 4px; border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);
+  cursor:pointer; font-size:15px; transition:all 0.15s; color:rgba(255,255,255,0.55);
+  display:flex; align-items:center; justify-content:center; min-height:36px;
+}
+.sidebar-action-btn:hover { background:rgba(255,255,255,0.12); color:var(--gold-warm); border-color:rgba(192,160,64,0.3); }
+.sidebar-action-btn.active { background:rgba(192,160,64,0.18); color:var(--gold-warm); border-color:rgba(192,160,64,0.35); }
+.sidebar-action-inner { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.sidebar-action-label { font-size:8.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:rgba(255,255,255,0.3); display:block; line-height:1; }
+
+/* ══ CYCLE CHIP ══ */
+.cycle-chip {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 15px; border-radius:var(--radius-sm);
+  font-size:12.5px; font-weight:600; margin-bottom:16px; border:1px solid;
+}
+.cycle-ok { background:var(--sage-ghost); color:var(--sage); border-color:var(--border-mid); }
+.cycle-due { background:#FFF3E0; color:#BF360C; border-color:#FFCC80; }
+.cycle-none { background:var(--beige-pale); color:var(--text-muted); border-color:var(--beige-light); font-weight:400; font-size:12px; }
+
+/* ══ CONFETTI ══ */
+#confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9000; display:none; }
+
+/* ══ PRINT ══ */
+@media print {
+  .sidebar, .mobile-topbar, .bottom-nav, .drawer-overlay,
+  .login-overlay, .toast, #confetti-canvas,
+  .section:not(.active), .print-hide { display:none !important; }
+  .section.active { display:block !important; }
+  .main { margin-left:0 !important; padding:10px !important; }
+  .planner-card { box-shadow:none !important; border:none !important; padding:0 !important; }
+  .planner-day { break-inside:avoid; }
+  body { background:white !important; }
+  * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  @page { margin:12mm; }
 }
 </style>
 </head>
 <body>
+
+<!-- CONFETTI -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-card">
+    <div class="login-logo-wrap">
+      <img src="assets/Logo.jpeg" alt="Logo" onerror="this.parentElement.style.background='var(--sage-ghost)';this.style.display='none'">
+    </div>
+    <div class="login-brand">
+      <h1>Habitar a vida com beleza</h1>
+      <span>Manual da Casa</span>
+    </div>
+    <div class="login-gold-line"></div>
+    <div id="login-profiles"></div>
+    <div class="login-form">
+      <input type="text" id="login-name-input" placeholder="Seu nome para começar…" maxlength="30" />
+      <button class="login-btn" onclick="createAndLogin()">Entrar →</button>
+    </div>
+    <p class="login-footnote">💾 Dados salvos localmente neste dispositivo</p>
+    <span class="login-skip" onclick="guestLogin()">Continuar sem perfil</span>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <div class="app">
 
 <!-- MOBILE TOPBAR -->
@@ -700,6 +770,7 @@ body::before {
   <div class="mobile-progress-pill">
     <span class="mobile-progress-pct" id="mobile-pct">0%</span>
   </div>
+  <div class="mobile-user-avatar" id="mobile-user-avatar" onclick="showLoginModal()" title="Trocar perfil">?</div>
 </header>
 
 <!-- DRAWER OVERLAY -->
@@ -708,24 +779,19 @@ body::before {
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <div class="bottom-nav-item active" id="bnav-hoje" onclick="showSection('hoje',null);setBottomNav('hoje')">
-    <span class="bnav-icon">🏠</span>
-    <span class="bnav-label">Hoje</span>
+    <span class="bnav-icon">🏠</span><span class="bnav-label">Hoje</span>
+  </div>
+  <div class="bottom-nav-item" id="bnav-planner" onclick="showSection('planner',null);setBottomNav('planner')">
+    <span class="bnav-icon">📓</span><span class="bnav-label">Planner</span>
   </div>
   <div class="bottom-nav-item" id="bnav-agenda" onclick="showSection('agenda',null);setBottomNav('agenda')">
-    <span class="bnav-icon">📅</span>
-    <span class="bnav-label">Agenda</span>
+    <span class="bnav-icon">📅</span><span class="bnav-label">Agenda</span>
   </div>
-  <div class="bottom-nav-item" id="bnav-diario" onclick="showSection('diario',null);setBottomNav('diario')">
-    <span class="bnav-icon">✅</span>
-    <span class="bnav-label">Diário</span>
-  </div>
-  <div class="bottom-nav-item" id="bnav-quartos" onclick="showSection('quartos',null);setBottomNav('quartos')">
-    <span class="bnav-icon">🛏</span>
-    <span class="bnav-label">Quartos</span>
+  <div class="bottom-nav-item" id="bnav-manual" onclick="showSection('manual',null);setBottomNav('manual')">
+    <span class="bnav-icon">📖</span><span class="bnav-label">Manual</span>
   </div>
   <div class="bottom-nav-item" id="bnav-more" onclick="toggleDrawer()">
-    <span class="bnav-icon">☰</span>
-    <span class="bnav-label">Mais</span>
+    <span class="bnav-icon">☰</span><span class="bnav-label">Mais</span>
   </div>
 </nav>
 
@@ -734,7 +800,7 @@ body::before {
   <div class="logo-area">
     <div class="logo">
       <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <img src="assets/Logo.jpeg" alt="Logo" onerror="this.parentElement.style.background='var(--sage-deep)';this.style.display='none'">
       </div>
       <div class="logo-text">
         <strong>Habitar a vida com beleza</strong>
@@ -746,51 +812,49 @@ body::before {
 
   <nav class="nav">
     <div class="nav-section-title">Principal</div>
-    <div class="nav-item active" onclick="showSection('hoje',this)">
-      <span class="nav-icon">🏠</span> Hoje
-    </div>
-    <div class="nav-item" onclick="showSection('agenda',this)">
-      <span class="nav-icon">📅</span> Agenda de Limpeza
-    </div>
-    <div class="nav-item" onclick="showSection('diario',this)">
-      <span class="nav-icon">✅</span> Tarefas Diárias
-    </div>
-    <div class="nav-item" onclick="showSection('semanal',this)">
-      <span class="nav-icon">📋</span> Tarefas Semanais
-    </div>
+    <div class="nav-item active" onclick="showSection('hoje',this)"><span class="nav-icon">🏠</span> Hoje</div>
+    <div class="nav-item" onclick="showSection('planner',this)"><span class="nav-icon">📓</span> Planner Semanal</div>
+    <div class="nav-item" onclick="showSection('agenda',this)"><span class="nav-icon">📅</span> Agenda de Limpeza</div>
+    <div class="nav-item" onclick="showSection('manual',this)"><span class="nav-icon">📖</span> Manual da Casa</div>
+    <div class="nav-item" onclick="showSection('diario',this)"><span class="nav-icon">✅</span> Tarefas Diárias</div>
+    <div class="nav-item" onclick="showSection('semanal',this)"><span class="nav-icon">📋</span> Tarefas Semanais</div>
     <div class="nav-section-title">Por Frequência</div>
-    <div class="nav-item" onclick="showSection('trimestral',this)">
-      <span class="nav-icon">🔄</span> Trimestrais
-    </div>
-    <div class="nav-item" onclick="showSection('semestral',this)">
-      <span class="nav-icon">🛠</span> Semestrais
-    </div>
+    <div class="nav-item" onclick="showSection('trimestral',this)"><span class="nav-icon">🔄</span> Trimestrais</div>
+    <div class="nav-item" onclick="showSection('semestral',this)"><span class="nav-icon">🛠</span> Semestrais</div>
     <div class="nav-section-title">Por Ambiente</div>
-    <div class="nav-item" onclick="showSection('quartos',this)">
-      <span class="nav-icon">🛏</span> Quartos
-    </div>
-    <div class="nav-item" onclick="showSection('salas',this)">
-      <span class="nav-icon">🛋</span> Salas & Escritórios
-    </div>
-    <div class="nav-item" onclick="showSection('cozinha',this)">
-      <span class="nav-icon">🍳</span> Cozinha & Lavanderia
-    </div>
-    <div class="nav-item" onclick="showSection('banheiros',this)">
-      <span class="nav-icon">🚿</span> Banheiros
-    </div>
-    <div class="nav-item" onclick="showSection('externos',this)">
-      <span class="nav-icon">🌿</span> Quintais & Varandas
-    </div>
+    <div class="nav-item" onclick="showSection('quartos',this)"><span class="nav-icon">🛏</span> Quartos</div>
+    <div class="nav-item" onclick="showSection('salas',this)"><span class="nav-icon">🛋</span> Salas & Escritórios</div>
+    <div class="nav-item" onclick="showSection('cozinha',this)"><span class="nav-icon">🍳</span> Cozinha & Lavanderia</div>
+    <div class="nav-item" onclick="showSection('banheiros',this)"><span class="nav-icon">🚿</span> Banheiros</div>
+    <div class="nav-item" onclick="showSection('externos',this)"><span class="nav-icon">🌿</span> Quintais & Varandas</div>
     <div class="nav-section-title">Guias</div>
-    <div class="nav-item" onclick="showSection('lavanderia',this)">
-      <span class="nav-icon">👕</span> Guia da Lavanderia
-    </div>
-    <div class="nav-item" onclick="showSection('organizacao',this)">
-      <span class="nav-icon">📦</span> 9 Passos da Organização
-    </div>
+    <div class="nav-item" onclick="showSection('lavanderia',this)"><span class="nav-icon">👕</span> Guia da Lavanderia</div>
+    <div class="nav-item" onclick="showSection('organizacao',this)"><span class="nav-icon">📦</span> 9 Passos da Organização</div>
   </nav>
 
   <div class="sidebar-footer">
+    <div class="sidebar-user" id="sidebar-user" onclick="showLoginModal()" title="Trocar perfil">
+      <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+      <div>
+        <div class="sidebar-user-name" id="sidebar-user-name">Convidado</div>
+        <div class="sidebar-user-meta">Trocar perfil</div>
+      </div>
+    </div>
+    <div class="sidebar-user-divider"></div>
+    <div class="sidebar-actions">
+      <button class="sidebar-action-btn" id="dark-toggle-btn" onclick="toggleDarkMode()" title="Alternar tema">
+        <div class="sidebar-action-inner"><span id="dark-toggle-icon">🌙</span><span class="sidebar-action-label">Tema</span></div>
+      </button>
+      <button class="sidebar-action-btn" id="notif-btn" onclick="requestNotifications()" title="Ativar notificações">
+        <div class="sidebar-action-inner"><span>🔔</span><span class="sidebar-action-label">Avisos</span></div>
+      </button>
+      <button class="sidebar-action-btn" onclick="exportData()" title="Exportar backup">
+        <div class="sidebar-action-inner"><span>💾</span><span class="sidebar-action-label">Backup</span></div>
+      </button>
+      <button class="sidebar-action-btn" onclick="importData()" title="Importar backup">
+        <div class="sidebar-action-inner"><span>📥</span><span class="sidebar-action-label">Importar</span></div>
+      </button>
+    </div>
     <div class="progress-label">
       <span>Progresso de hoje</span>
       <strong id="progress-pct">0%</strong>
@@ -798,47 +862,46 @@ body::before {
     <div class="progress-bar-bg">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
     </div>
-    <div class="streak">
-      🔥 <span id="streak-count">3 dias consecutivos</span>
-    </div>
+    <div class="streak">🔥 <span id="streak-count">Comece hoje!</span></div>
   </div>
 </aside>
 
 <!-- MAIN -->
 <main class="main">
 
-  <!-- ── HOJE ── -->
+  <!-- HOJE -->
   <section class="section active" id="sec-hoje">
     <div class="today-hero">
       <h2>Bom dia ✨</h2>
       <p id="today-date-hero"></p>
     </div>
-
     <div class="grid-4">
       <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--sage)"></div>
         <div class="stat-icon">✅</div>
         <div class="stat-value" id="stat-done" style="color:var(--sage)">0</div>
         <div class="stat-label">Concluídas</div>
       </div>
       <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--gold)"></div>
         <div class="stat-icon">📋</div>
         <div class="stat-value" id="stat-total" style="color:var(--gold)">17</div>
         <div class="stat-label">Total Hoje</div>
       </div>
       <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--beige-deep)"></div>
         <div class="stat-icon">⏱</div>
         <div class="stat-value" style="color:var(--beige-deep)">~15</div>
         <div class="stat-label">Min. Furacão</div>
       </div>
       <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--sage-mid)"></div>
         <div class="stat-icon">🗓</div>
         <div class="stat-value" id="stat-week" style="color:var(--sage-mid)">S1</div>
         <div class="stat-label">Semana Atual</div>
       </div>
     </div>
-
     <div class="week-indicator" id="week-days"></div>
-
     <div class="grid-2">
       <div class="card">
         <div class="card-header">
@@ -854,7 +917,6 @@ body::before {
           <button class="btn btn-gold" onclick="addCustomDaily()">+</button>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">
           <div>
@@ -872,7 +934,6 @@ body::before {
         <ul class="checklist" id="week-preview-list"></ul>
       </div>
     </div>
-
     <div class="card">
       <div class="card-header"><div class="card-title">📊 Histórico da Semana</div></div>
       <div id="hist-chart"></div>
@@ -882,181 +943,164 @@ body::before {
     </div>
   </section>
 
-  <!-- ── AGENDA ── -->
-  <section class="section" id="sec-agenda">
+  <!-- PLANNER -->
+  <section class="section" id="sec-planner">
     <div class="page-header">
-      <h1>Agenda de Limpeza</h1>
-      <p>Divida sua casa em 5 áreas — foque em apenas 1 área por semana</p>
+      <h1>Planner Semanal</h1>
+      <p>Organize sua semana e acompanhe suas metas e tarefas</p>
     </div>
-    <div class="grid-2">
-      <div id="agenda-week-cards"></div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">Como funciona</div></div>
-        <div class="timeline" id="agenda-timeline"></div>
+    <div class="planner-card" id="planner-container">
+      <div class="planner-header" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>📓 Planner da Semana</span>
+        <button class="btn btn-gold print-hide" onclick="printWeek()" style="font-size:11.5px;padding:6px 14px;">🖨 Imprimir semana</button>
+      </div>
+      <div id="planner-weeks"></div>
+    </div>
+  </section>
+
+  <!-- MANUAL -->
+  <section class="section" id="sec-manual">
+    <div class="page-header"><h1>Manual da Casa</h1><p>Informações essenciais sobre a casa, equipamentos e regras</p></div>
+    <div class="manual-section">
+      <div class="manual-section-title">📍 Informações Básicas</div>
+      <div class="manual-info-grid">
+        <div class="manual-info-item"><div class="manual-info-label">Endereço</div><div class="manual-info-value">Rua Exemplo, 123<br>Jardim das Flores<br>João Pessoa - PB<br>CEP: 58000-000</div></div>
+        <div class="manual-info-item"><div class="manual-info-label">Wi-Fi</div><div class="manual-info-value">Rede: CasaJP_5G<br>Senha: exemplo2026</div></div>
+        <div class="manual-info-item"><div class="manual-info-label">Emergências</div><div class="manual-info-value">Polícia: 190<br>Bombeiros: 193<br>SAMU: 192</div></div>
+        <div class="manual-info-item"><div class="manual-info-label">Proprietário</div><div class="manual-info-value">Tel: (83) 98888-8888</div></div>
+      </div>
+    </div>
+    <div class="manual-section">
+      <div class="manual-section-title">🛏 Quartos e Acomodações</div>
+      <div class="manual-subsection"><div class="manual-subsection-title">Quarto 1 - Suíte Principal</div><ul class="manual-list"><li>Cama king size</li><li>Ar-condicionado</li><li>TV smart 50"</li><li>Banheiro privativo com chuveiro elétrico</li><li>Armário embutido</li></ul></div>
+      <div class="manual-subsection"><div class="manual-subsection-title">Quarto 2 - Suíte Secundária</div><ul class="manual-list"><li>Cama queen size</li><li>Ar-condicionado</li><li>TV smart 43"</li><li>Banheiro privativo</li></ul></div>
+      <div class="manual-subsection"><div class="manual-subsection-title">Quartos 3 e 4</div><ul class="manual-list"><li>Quarto 3: 2 camas de solteiro, ventilador, armário</li><li>Quarto 4: Cama de casal, ventilador</li></ul></div>
+    </div>
+    <div class="manual-section">
+      <div class="manual-section-title">🍳 Cozinha</div>
+      <div class="manual-subsection"><div class="manual-subsection-title">Eletrodomésticos</div><ul class="manual-list"><li>Geladeira frost-free</li><li>Fogão 5 bocas</li><li>Forno elétrico</li><li>Micro-ondas</li><li>Air fryer</li><li>Cafeteira, liquidificador, batedeira</li></ul></div>
+      <div class="manual-subsection"><div class="manual-subsection-title">Utensílios</div><ul class="manual-list"><li>Panelas diversas (pressão, antiaderentes, inox)</li><li>Formas para bolo e assadeiras</li><li>Talheres completos para 12 pessoas</li><li>Pratos, copos e tigelas</li><li>Tábuas de corte e facas de cozinha</li></ul></div>
+    </div>
+    <div class="manual-section">
+      <div class="manual-section-title">📜 Regras da Casa</div>
+      <ul class="manual-list"><li><strong>Silêncio:</strong> Respeitamos o horário de 22h às 8h</li><li><strong>Fumar:</strong> Proibido dentro da casa, área externa disponível</li><li><strong>Pets:</strong> Bem-vindos! Manter na coleira em áreas comuns</li><li><strong>Visitas:</strong> Avisar com antecedência, máximo 8 pessoas</li><li><strong>Lixo:</strong> Separar recicláveis, coleta terça, quinta e sábado</li></ul>
+    </div>
+    <div class="manual-section">
+      <div class="manual-section-title">🚪 Check-in e Check-out</div>
+      <div class="manual-info-grid">
+        <div class="manual-info-item"><div class="manual-info-label">Check-in</div><div class="manual-info-value">A partir das 14h<br>Chaves na caixa de segurança</div></div>
+        <div class="manual-info-item"><div class="manual-info-label">Check-out</div><div class="manual-info-value">Até 11h<br>Deixar chaves na caixa<br>Apagar luzes e ar-condicionado</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ── DIÁRIO ── -->
-  <section class="section" id="sec-diario">
-    <div class="page-header">
-      <h1>Tarefas Diárias</h1>
-      <p>Execute todos os dias para manter a casa em ordem</p>
+  <!-- AGENDA -->
+  <section class="section" id="sec-agenda">
+    <div class="page-header"><h1>Agenda de Limpeza</h1><p>Divida sua casa em 5 áreas — foque em apenas 1 área por semana</p></div>
+    <div class="grid-2">
+      <div id="agenda-week-cards"></div>
+      <div class="card"><div class="card-header"><div class="card-title">Como funciona</div></div><div class="timeline" id="agenda-timeline"></div></div>
     </div>
+  </section>
+
+  <!-- DIÁRIO -->
+  <section class="section" id="sec-diario">
+    <div class="page-header"><h1>Tarefas Diárias</h1><p>Execute todos os dias para manter a casa em ordem</p></div>
     <div class="grid-2">
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Lista Completa</div>
-          <span class="badge badge-sage" id="diario-badge">0/17</span>
-        </div>
+        <div class="card-header"><div class="card-title">Lista Completa</div><span class="badge badge-sage" id="diario-badge">0/17</span></div>
         <ul class="checklist" id="diario-full-list"></ul>
       </div>
       <div>
         <div class="card" style="margin-bottom:16px;">
           <div class="card-header"><div class="card-title">Ritmo do Dia</div></div>
           <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot" style="background:var(--sage)"></div>
-              <div><div class="timeline-title">Manhã — Arrumação geral</div><div class="timeline-desc">Camas, vassouras, bancadas e banheiros</div></div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot" style="background:var(--gold)"></div>
-              <div><div class="timeline-title">Tarde — Cozinha & Roupas</div><div class="timeline-desc">Cozinhar, louças, roupas e pets</div></div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot" style="background:var(--beige-deep)"></div>
-              <div><div class="timeline-title">Noite — Finalização</div><div class="timeline-desc">Lixo, aromatizar, abrir janelas, plantas</div></div>
-            </div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:var(--sage)"></div><div><div class="timeline-title">Manhã — Arrumação geral</div><div class="timeline-desc">Camas, vassouras, bancadas e banheiros</div></div></div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:var(--gold)"></div><div><div class="timeline-title">Tarde — Cozinha & Roupas</div><div class="timeline-desc">Cozinhar, louças, roupas e pets</div></div></div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:var(--beige-deep)"></div><div><div class="timeline-title">Noite — Finalização</div><div class="timeline-desc">Lixo, aromatizar, abrir janelas, plantas</div></div></div>
           </div>
         </div>
-        <div class="tip-box">
-          <strong>⚡ Furacão 15 minutos</strong><br>
-          Quando o tempo estiver curto, foque apenas nas primeiras 5 tarefas para manter o essencial em dia.
-        </div>
+        <div class="tip-box"><strong>⚡ Furacão 15 minutos</strong><br>Quando o tempo estiver curto, foque apenas nas primeiras 5 tarefas para manter o essencial em dia.</div>
       </div>
     </div>
   </section>
 
-  <!-- ── SEMANAL ── -->
+  <!-- SEMANAL -->
   <section class="section" id="sec-semanal">
     <div class="page-header"><h1>Tarefas Semanais</h1><p>Execute uma vez por semana para manter o padrão da casa</p></div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Checklist Semanal</div>
-        <span class="badge badge-gold" id="semanal-badge">0/9</span>
-      </div>
-      <ul class="checklist" id="semanal-list"></ul>
-    </div>
+    <div class="card"><div class="card-header"><div class="card-title">Checklist Semanal</div><span class="badge badge-gold" id="semanal-badge">0/9</span></div><ul class="checklist" id="semanal-list"></ul></div>
   </section>
 
-  <!-- ── TRIMESTRAL ── -->
+  <!-- TRIMESTRAL -->
   <section class="section" id="sec-trimestral">
     <div class="page-header"><h1>Tarefas Trimestrais</h1><p>A cada 3 meses — conservação e manutenção profunda</p></div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Checklist Trimestral</div>
-        <span class="badge badge-beige" id="trim-badge">0/5</span>
-      </div>
-      <ul class="checklist" id="trim-list"></ul>
-    </div>
+    <div id="trim-countdown"></div>
+    <div class="card"><div class="card-header"><div class="card-title">Checklist Trimestral</div><span class="badge badge-beige" id="trim-badge">0/5</span></div><ul class="checklist" id="trim-list"></ul></div>
   </section>
 
-  <!-- ── SEMESTRAL ── -->
+  <!-- SEMESTRAL -->
   <section class="section" id="sec-semestral">
     <div class="page-header"><h1>Tarefas Semestrais</h1><p>A cada 6 meses — manutenção e conservação da casa</p></div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Checklist Semestral</div>
-        <span class="badge badge-beige" id="sem-badge">0/12</span>
-      </div>
-      <ul class="checklist" id="sem-list"></ul>
-    </div>
+    <div id="sem-countdown"></div>
+    <div class="card"><div class="card-header"><div class="card-title">Checklist Semestral</div><span class="badge badge-beige" id="sem-badge">0/12</span></div><ul class="checklist" id="sem-list"></ul></div>
   </section>
 
-  <!-- ── QUARTOS ── -->
+  <!-- QUARTOS -->
   <section class="section" id="sec-quartos">
     <div class="page-header"><h1>Semana dos Quartos</h1><p>Passo a passo completo para limpeza profunda dos quartos</p></div>
-    <div class="room-card">
-      <div class="room-card-header" style="background:var(--sage-ghost);color:var(--sage-deep);border-bottom:1px solid var(--sage-pale);">
-        🛏 Quartos <span class="badge badge-sage ml-auto" id="quartos-badge">0/17</span>
-      </div>
-      <div class="room-card-body"><ul class="checklist" id="quartos-list"></ul></div>
-    </div>
+    <div class="room-card"><div class="room-card-header" style="background:var(--sage-ghost);color:var(--forest);border-bottom:1px solid var(--sage-pale);">🛏 Quartos <span class="badge badge-sage ml-auto" id="quartos-badge">0/17</span></div><div class="room-card-body"><ul class="checklist" id="quartos-list"></ul></div></div>
   </section>
 
-  <!-- ── SALAS ── -->
+  <!-- SALAS -->
   <section class="section" id="sec-salas">
     <div class="page-header"><h1>Semana das Salas & Escritórios</h1><p>Passo a passo completo</p></div>
-    <div class="room-card">
-      <div class="room-card-header" style="background:var(--beige-pale);color:var(--sage-deep);border-bottom:1px solid var(--beige-light);">
-        🛋 Salas & Escritórios <span class="badge badge-beige ml-auto" id="salas-badge">0/19</span>
-      </div>
-      <div class="room-card-body"><ul class="checklist" id="salas-list"></ul></div>
-    </div>
+    <div class="room-card"><div class="room-card-header" style="background:var(--beige-pale);color:var(--forest);border-bottom:1px solid var(--beige-light);">🛋 Salas & Escritórios <span class="badge badge-beige ml-auto" id="salas-badge">0/19</span></div><div class="room-card-body"><ul class="checklist" id="salas-list"></ul></div></div>
   </section>
 
-  <!-- ── COZINHA ── -->
+  <!-- COZINHA -->
   <section class="section" id="sec-cozinha">
     <div class="page-header"><h1>Semana da Cozinha & Lavanderia</h1><p>Passo a passo completo</p></div>
-    <div class="room-card">
-      <div class="room-card-header" style="background:var(--gold-ghost);color:var(--sage-deep);border-bottom:1px solid var(--gold-pale);">
-        🍳 Cozinha & Lavanderia <span class="badge badge-gold ml-auto" id="cozinha-badge">0/22</span>
-      </div>
-      <div class="room-card-body"><ul class="checklist" id="cozinha-list"></ul></div>
-    </div>
+    <div class="room-card"><div class="room-card-header" style="background:var(--gold-ghost);color:var(--forest);border-bottom:1px solid var(--gold-pale);">🍳 Cozinha & Lavanderia <span class="badge badge-gold ml-auto" id="cozinha-badge">0/22</span></div><div class="room-card-body"><ul class="checklist" id="cozinha-list"></ul></div></div>
   </section>
 
-  <!-- ── BANHEIROS ── -->
+  <!-- BANHEIROS -->
   <section class="section" id="sec-banheiros">
     <div class="page-header"><h1>Semana dos Banheiros</h1><p>Passo a passo completo</p></div>
-    <div class="room-card">
-      <div class="room-card-header" style="background:var(--sage-ghost);color:var(--sage-deep);border-bottom:1px solid var(--sage-pale);">
-        🚿 Banheiros <span class="badge badge-sage ml-auto" id="banh-badge">0/18</span>
-      </div>
-      <div class="room-card-body"><ul class="checklist" id="banh-list"></ul></div>
-    </div>
+    <div class="room-card"><div class="room-card-header" style="background:var(--sage-ghost);color:var(--forest);border-bottom:1px solid var(--sage-pale);">🚿 Banheiros <span class="badge badge-sage ml-auto" id="banh-badge">0/18</span></div><div class="room-card-body"><ul class="checklist" id="banh-list"></ul></div></div>
   </section>
 
-  <!-- ── EXTERNOS ── -->
+  <!-- EXTERNOS -->
   <section class="section" id="sec-externos">
     <div class="page-header"><h1>Semana dos Quintais & Varandas</h1><p>Passo a passo para áreas externas</p></div>
-    <div class="room-card">
-      <div class="room-card-header" style="background:var(--sage-pale);color:var(--sage-deep);border-bottom:1px solid var(--sage-light);">
-        🌿 Quintais & Varandas <span class="badge badge-sage ml-auto" id="ext-badge">0/10</span>
-      </div>
-      <div class="room-card-body"><ul class="checklist" id="ext-list"></ul></div>
-    </div>
+    <div class="room-card"><div class="room-card-header" style="background:var(--sage-pale);color:var(--forest);border-bottom:1px solid var(--sage-light);">🌿 Quintais & Varandas <span class="badge badge-sage ml-auto" id="ext-badge">0/10</span></div><div class="room-card-body"><ul class="checklist" id="ext-list"></ul></div></div>
   </section>
 
-  <!-- ── LAVANDERIA ── -->
+  <!-- LAVANDERIA -->
   <section class="section" id="sec-lavanderia">
     <div class="page-header"><h1>Guia da Lavanderia</h1><p>Símbolos e instruções para cuidar das suas roupas com elegância</p></div>
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-header"><div class="card-title">Símbolos de Lavagem</div></div>
-      <div class="laundry-grid" id="laundry-symbols"></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">Instruções Gerais</div></div>
-      <div id="laundry-tips"></div>
-    </div>
+    <div class="card" style="margin-bottom:20px;"><div class="card-header"><div class="card-title">Símbolos de Lavagem</div></div><div class="laundry-grid" id="laundry-symbols"></div></div>
+    <div class="card"><div class="card-header"><div class="card-title">Instruções Gerais</div></div><div id="laundry-tips"></div></div>
   </section>
 
-  <!-- ── ORGANIZAÇÃO ── -->
+  <!-- ORGANIZAÇÃO -->
   <section class="section" id="sec-organizacao">
     <div class="page-header"><h1>9 Passos da Organização</h1><p>Metodologia completa para organizar qualquer ambiente</p></div>
     <div class="org-steps" id="org-steps-grid"></div>
     <div class="gold-line"></div>
-    <div class="tip-box">
-      <strong>Foque em um único cômodo por vez.</strong> Tentar organizar a casa toda de uma vez gera sobrecarga e cansaço. Siga os 9 passos na ordem indicada para resultados que realmente duram — e que funcionam para os seus hábitos.
-    </div>
+    <div class="tip-box"><strong>Foque em um único cômodo por vez.</strong> Tentar organizar a casa toda de uma vez gera sobrecarga e cansaço. Siga os 9 passos na ordem indicada para resultados que realmente duram.</div>
   </section>
 
 </main>
 </div>
 
 <script>
+/* ══════════════════════════════════════════
+   BASE DATA
+══════════════════════════════════════════ */
+const BASE_DAILY = ['⚡ 15 Minutos Furacão — rotina rápida','🛏 Arrumar as camas','🧹 Passar vassoura e pano nos pisos','🚿 Passar pano: bancadas e vasos dos banheiros','🧻 Reposição de papel higiênico (se necessário)','🍳 Passar pano: bancada da cozinha e fogão','🍽 Trocar pano de prato da cozinha','👨‍🍳 Cozinhar','🧽 Desinfetar esponja de lavar louça','🫧 Lavar louças','👗 Cuidar das roupas','🐾 Cuidar dos pets','🌱 Regar as plantas e flores','🗑 Retirar o lixo','📦 Cozinhar e preparar marmitas','🪟 Abrir janelas','✨ Aromatizar a casa'];
+
 const DATA = {
-  daily: ['⚡ 15 Minutos Furacão — rotina rápida','🛏 Arrumar as camas','🧹 Passar vassoura e pano nos pisos','🚿 Passar pano: bancadas e vasos dos banheiros','🧻 Reposição de papel higiênico (se necessário)','🍳 Passar pano: bancada da cozinha e fogão','🍽 Trocar pano de prato da cozinha','👨‍🍳 Cozinhar','🧽 Desinfetar esponja de lavar louça','🫧 Lavar louças','👗 Cuidar das roupas','🐾 Cuidar dos pets','🌱 Regar as plantas e flores','🗑 Retirar o lixo','📦 Cozinhar e preparar marmitas','🪟 Abrir janelas','✨ Aromatizar a casa'],
+  daily: [...BASE_DAILY],
   semanal: ['🛁 Trocar toalhas','🛏 Trocar roupas de cama','👔 Passar e guardar roupas','🧽 Trocar esponja de lavar louça','🏊 Limpar a piscina (se houver)','📄 Organizar e arquivar contas e correspondências','📓 Organizar o planner semanal','🛒 Realizar compras de supermercado e feira','💻 Limpar telas dos computadores'],
   trimestral: ['🔄 Virar colchões do lado oposto','🛏 Lavar travesseiros','🚪 Passar lubrificante nas portas','📚 Higienizar os livros para evitar traças e alergias','💡 Trocar lâmpadas queimadas'],
   semestral: ['🦟 Dedetização','🛋 Lavagem de estofados','🪣 Lavagem de tapetes','🪵 Utilizar cera em móveis de madeira','🌬 Aspirar a parte traseira da geladeira','🧲 Limpar borrachas de vedação da geladeira','🍽 Lavar todas as louças sem uso da casa','👚 Lavar todas as roupas sem uso da casa','💊 Descartar remédios vencidos','❄️ Limpar filtro de ar condicionado','🔧 Realizar manutenção filtro cozinha','🏠 Verificar calha, telhado e caixa d\'água'],
@@ -1065,261 +1109,852 @@ const DATA = {
   cozinha: ['Limpar armário (interno e externo)','Limpar gavetas (interno e externo)','Descartar alimentos vencidos','Limpar queimadores e grades do fogão','Desentupir fogão','Limpar microondas','Desinfetar lixeiras','Limpar prataria','Limpar mesas e cadeiras','Limpar prateleiras','Passar pano em livros de receita','Aspirar e limpar o piso','Limpar as janelas','Limpar portas, dobradiças e maçanetas','Limpar paredes','Limpar teto','Limpar interruptores','Limpar eletrodomésticos','Limpar pia e misturadores','Limpar exaustor','Limpar máquina de lavar e secar roupas','Limpar ferro de passar'],
   banheiros: ['Limpar armário (interno e externo)','Limpar gavetas (interno e externo)','Limpar objetos','Limpar prateleiras','Lavar box','Limpar rejunte dos azulejos','Trocar desinfetantes de pastilha do vaso','Limpar e desentupir furinhos do chuveiro e chuveirinho','Limpar escovas de cabelo e pincéis de maquiagem','Limpar espelhos','Aspirar e limpar o piso','Limpar as janelas','Limpar portas, dobradiças e maçanetas','Limpar lâmpadas e lustres','Limpar paredes','Limpar teto com anti mofo','Limpar interruptores','Arejar e aromatizar o ambiente'],
   externos: ['Limpar o piso','Varrer jardim','Limpar as janelas','Limpar portas, dobradiças e maçanetas','Limpar lâmpadas e lustres','Limpar paredes','Limpar teto','Limpar interruptores','Lavar capacho de entrada','Podar as plantas'],
-  weeks: [
-    {label:'1ª Semana',name:'Quartos',icon:'🛏',key:'quartos'},
-    {label:'2ª Semana',name:'Salas e Escritórios',icon:'🛋',key:'salas'},
-    {label:'3ª Semana',name:'Cozinha e Lavanderia',icon:'🍳',key:'cozinha'},
-    {label:'4ª Semana',name:'Banheiros',icon:'🚿',key:'banheiros'},
-    {label:'5ª Semana',name:'Entrada, Quintais e Varandas',icon:'🌿',key:'externos'}
-  ],
-  orgSteps:[
-    {n:1,title:'Escolha um cômodo',desc:'Foque em apenas um ambiente por vez'},
-    {n:2,title:'Analise os hábitos',desc:'Entenda como você usa o espaço'},
-    {n:3,title:'Analise o espaço',desc:'Medidas e disponibilidade de áreas'},
-    {n:4,title:'Escolha organizadores',desc:'Caixas, cestos, gavetas adaptadas'},
-    {n:5,title:'Categorize',desc:'Separe por tipo, uso e frequência'},
-    {n:6,title:'Descarte',desc:'Elimine o desnecessário sem culpa'},
-    {n:7,title:'Organize (casinhas)',desc:'Cada coisa em seu lugar fixo'},
-    {n:8,title:'Identificação',desc:'Etiquete caixas, gavetas e prateleiras'},
-    {n:9,title:'Manual da Casa',desc:'Documente os processos e rotinas'}
-  ],
-  laundry:{
-    lavar:[{sym:'🪣',l:'Máquina ou mão'},{sym:'30°',l:'Temperatura máxima 30°'},{sym:'〰',l:'Lavagem suave'},{sym:'✋',l:'Não torcer'},{sym:'🤲',l:'Lavagem manual'},{sym:'🚫',l:'Sem água — lavagem a seco'}],
-    alvejar:[{sym:'△',l:'Pode alvejar'},{sym:'△̲',l:'Sem cloro'},{sym:'△̲̲',l:'Sem alvejante'},{sym:'✕',l:'Proibido alvejar'}],
-    secar:[{sym:'↓🌡',l:'Baixa temperatura'},{sym:'⊙',l:'Secagem normal'},{sym:'🚫⊙',l:'Proibido secadora'},{sym:'□',l:'No varal'},{sym:'═',l:'Horizontal'},{sym:'|||',l:'Vertical'},{sym:'◺',l:'Sem torcer'}],
-    passar:[{sym:'🔲',l:'Normal'},{sym:'110°',l:'Até 110°'},{sym:'150°',l:'Até 150°'},{sym:'200°',l:'Até 200°'},{sym:'🚫🔲',l:'Não passar'}]
-  },
-  laundryTips:['Tenha um cesto de transporte para coletar roupas sujas. Separe em baldes específicos: branca, colorida, íntima, cama mesa & banho.','Separe as roupas por tipo de tecido — os tecidos mais pesados devem ser lavados em ciclo diferente dos leves.','Feche zíperes, levante colarinhos e esvazie bolsos antes de lavar.','Leia a etiqueta de lavagem para informações sobre centrifugação, secagem, temperatura e modo de passar.','Para peças delicadas, use saquinhos com zíper. Não deixe de molho por mais de uma hora.','Se houver mancha ou gordura, faça pré-lavagem com produto removedor antes de colocar na máquina.','Cuidado com água quente — pode danificar as peças e diminuir a vida útil.','Para manter a cor de peças escuras, lave-as viradas do avesso.','Use fita adesiva ou rolinho para retirar bolinhas. Jamais utilize gilete para essa finalidade.']
+  weeks: [{label:'1ª Semana',name:'Quartos',icon:'🛏',key:'quartos'},{label:'2ª Semana',name:'Salas e Escritórios',icon:'🛋',key:'salas'},{label:'3ª Semana',name:'Cozinha e Lavanderia',icon:'🍳',key:'cozinha'},{label:'4ª Semana',name:'Banheiros',icon:'🚿',key:'banheiros'},{label:'5ª Semana',name:'Entrada, Quintais e Varandas',icon:'🌿',key:'externos'}],
+  orgSteps: [{n:1,title:'Escolha um cômodo',desc:'Foque em apenas um ambiente por vez'},{n:2,title:'Analise os hábitos',desc:'Entenda como você usa o espaço'},{n:3,title:'Analise o espaço',desc:'Medidas e disponibilidade de áreas'},{n:4,title:'Escolha organizadores',desc:'Caixas, cestos, gavetas adaptadas'},{n:5,title:'Categorize',desc:'Separe por tipo, uso e frequência'},{n:6,title:'Descarte',desc:'Elimine o desnecessário sem culpa'},{n:7,title:'Organize (casinhas)',desc:'Cada coisa em seu lugar fixo'},{n:8,title:'Identificação',desc:'Etiquete caixas, gavetas e prateleiras'},{n:9,title:'Manual da Casa',desc:'Documente os processos e rotinas'}],
+  laundry: {lavar:[{sym:'🪣',l:'Máquina ou mão'},{sym:'30°',l:'Temperatura máxima 30°'},{sym:'〰',l:'Lavagem suave'},{sym:'✋',l:'Não torcer'},{sym:'🤲',l:'Lavagem manual'},{sym:'🚫',l:'Lavagem a seco'}],alvejar:[{sym:'△',l:'Pode alvejar'},{sym:'△̲',l:'Sem cloro'},{sym:'△̲̲',l:'Sem alvejante'},{sym:'✕',l:'Proibido alvejar'}],secar:[{sym:'↓🌡',l:'Baixa temperatura'},{sym:'⊙',l:'Secagem normal'},{sym:'🚫⊙',l:'Proibido secadora'},{sym:'□',l:'No varal'},{sym:'═',l:'Horizontal'},{sym:'|||',l:'Vertical'},{sym:'◺',l:'Sem torcer'}],passar:[{sym:'🔲',l:'Normal'},{sym:'110°',l:'Até 110°'},{sym:'150°',l:'Até 150°'},{sym:'200°',l:'Até 200°'},{sym:'🚫🔲',l:'Não passar'}]},
+  laundryTips: ['Tenha um cesto de transporte para coletar roupas sujas. Separe em baldes específicos: branca, colorida, íntima, cama mesa & banho.','Separe as roupas por tipo de tecido — os tecidos mais pesados devem ser lavados em ciclo diferente dos leves.','Feche zíperes, levante colarinhos e esvazie bolsos antes de lavar.','Leia a etiqueta de lavagem para informações sobre centrifugação, secagem, temperatura e modo de passar.','Para peças delicadas, use saquinhos com zíper. Não deixe de molho por mais de uma hora.','Se houver mancha ou gordura, faça pré-lavagem com produto removedor antes de colocar na máquina.','Cuidado com água quente — pode danificar as peças e diminuir a vida útil.','Para manter a cor de peças escuras, lave-as viradas do avesso.','Use fita adesiva ou rolinho para retirar bolinhas. Jamais utilize gilete para essa finalidade.']
 };
 
-let state={};
-function getKey(){ return 'casaEmOrdem_v3_'+new Date().toDateString(); }
-function loadState(){ try{ const s=localStorage.getItem(getKey()); if(s) state=JSON.parse(s); else state={}; }catch(e){ state={}; } }
-function saveState(){ try{ localStorage.setItem(getKey(),JSON.stringify(state)); }catch(e){} }
+/* ══════════════════════════════════════════
+   DATABASE (localStorage, per-user)
+══════════════════════════════════════════ */
+const DB = {
+  P: 'hbc_',
+  COLORS: ['#366358','#AA8824','#A8886A','#4F8072','#74A294'],
 
-function makeChecklist(items,sk,badgeId,listId){
-  if(!state[sk]) state[sk]={};
-  const ul=document.getElementById(listId); if(!ul) return;
-  ul.innerHTML='';
-  items.forEach((item,i)=>{
-    const done=!!state[sk][i];
-    const li=document.createElement('li');
-    li.className=done?'done':'';
-    li.innerHTML=`<div class="check-box"><span class="check-tick">✓</span></div><span>${item}</span>`;
-    li.onclick=()=>{
-      state[sk][i]=!state[sk][i];
-      li.className=state[sk][i]?'done':'';
+  _ls(key, val) {
+    if (val === undefined) {
+      try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+    }
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+  },
+
+  getUsers() { return this._ls(this.P + 'users') || []; },
+  saveUsers(u) { this._ls(this.P + 'users', u); },
+
+  createUser(name) {
+    const users = this.getUsers();
+    const id = 'u' + Date.now();
+    const color = this.COLORS[users.length % this.COLORS.length];
+    const user = { id, name: name.trim(), color, at: new Date().toISOString() };
+    users.push(user);
+    this.saveUsers(users);
+    return user;
+  },
+
+  getCurrent() { return localStorage.getItem(this.P + 'cur') || null; },
+  setCurrent(id) { localStorage.setItem(this.P + 'cur', id); },
+
+  getCurrentUser() {
+    const id = this.getCurrent();
+    if (!id) return null;
+    return this.getUsers().find(u => u.id === id) || null;
+  },
+
+  k(key) {
+    const uid = this.getCurrent();
+    return this.P + (uid || 'guest') + '_' + key;
+  },
+
+  get(key) { return this._ls(this.k(key)); },
+  set(key, val) { this._ls(this.k(key), val); },
+
+  getDayKey() { return 'day_' + new Date().toDateString(); },
+
+  recordHistory(pct) {
+    const h = this.get('hist') || [];
+    const date = new Date().toDateString();
+    const idx = h.findIndex(x => x.d === date);
+    if (idx >= 0) h[idx].p = pct;
+    else { h.push({ d: date, p: pct }); if (h.length > 90) h.shift(); }
+    this.set('hist', h);
+  },
+
+  getWeekHistory() {
+    const h = this.get('hist') || [];
+    const res = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const entry = h.find(x => x.d === d.toDateString());
+      res.push(entry ? entry.p : 0);
+    }
+    return res;
+  },
+
+  getStreak() {
+    const h = this.get('hist') || [];
+    let streak = 0;
+    for (let i = 0; i < 90; i++) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const entry = h.find(x => x.d === d.toDateString());
+      if (entry && entry.p > 0) streak++;
+      else if (i > 0) break;
+    }
+    return streak;
+  }
+};
+
+/* ══════════════════════════════════════════
+   APP STATE
+══════════════════════════════════════════ */
+let state = {};
+let currentUser = null;
+let currentWeek = 1;
+let toastTimer = null;
+
+function loadState() {
+  const dayData = DB.get(DB.getDayKey()) || {};
+  const tasks = DB.get('tasks') || {};
+  const customs = DB.get('custom') || [];
+
+  DATA.daily = [...BASE_DAILY, ...customs.map(t => '📝 ' + t)];
+
+  state = {
+    daily:   dayData.done   || {},
+    semanal: tasks.semanal  || {},
+    trim:    tasks.trim     || {},
+    sem:     tasks.sem      || {},
+    quartos: tasks.quartos  || {},
+    salas:   tasks.salas    || {},
+    cozinha: tasks.cozinha  || {},
+    banh:    tasks.banh     || {},
+    ext:     tasks.ext      || {}
+  };
+}
+
+function saveState() {
+  DB.set(DB.getDayKey(), { done: state.daily || {} });
+  DB.set('tasks', {
+    semanal: state.semanal, trim: state.trim, sem: state.sem,
+    quartos: state.quartos, salas: state.salas, cozinha: state.cozinha,
+    banh: state.banh, ext: state.ext
+  });
+}
+
+/* ══════════════════════════════════════════
+   USER SYSTEM
+══════════════════════════════════════════ */
+function showLoginModal() {
+  document.getElementById('login-overlay').classList.remove('hidden');
+  renderLoginProfiles();
+  setTimeout(() => document.getElementById('login-name-input').focus(), 300);
+}
+
+function hideLoginModal() {
+  document.getElementById('login-overlay').classList.add('hidden');
+}
+
+function renderLoginProfiles() {
+  const users = DB.getUsers();
+  const container = document.getElementById('login-profiles');
+  if (!users.length) { container.innerHTML = ''; return; }
+
+  let html = `<div class="login-profiles-title">Bem-vindo de volta</div><div class="profiles-grid">`;
+  users.slice(-6).forEach(u => {
+    const initials = u.name.slice(0,2).toUpperCase();
+    html += `<div class="profile-chip" onclick="loginAs('${u.id}')">
+      <div class="profile-avatar-chip" style="background:${u.color}">${initials}</div>
+      <span class="profile-chip-name">${u.name.split(' ')[0]}</span>
+    </div>`;
+  });
+  html += `</div><div class="login-divider-or"><span>ou entre com novo nome</span></div>`;
+  container.innerHTML = html;
+}
+
+function createAndLogin() {
+  const input = document.getElementById('login-name-input');
+  const name = input.value.trim();
+  if (!name) { input.focus(); input.style.borderColor = 'var(--gold)'; setTimeout(() => input.style.borderColor = '', 1200); return; }
+  const existing = DB.getUsers().find(u => u.name.toLowerCase() === name.toLowerCase());
+  if (existing) { loginAs(existing.id); return; }
+  const user = DB.createUser(name);
+  loginAs(user.id);
+}
+
+function loginAs(userId) {
+  DB.setCurrent(userId);
+  currentUser = DB.getCurrentUser();
+  hideLoginModal();
+  loadState();
+  renderApp();
+  updateCycleCountdowns();
+  scheduleNotifications();
+  updateNotifBtn();
+  showToast('👋 Olá, ' + (currentUser ? currentUser.name.split(' ')[0] : '') + '!');
+}
+
+function guestLogin() {
+  DB.setCurrent(null);
+  localStorage.removeItem('hbc_cur');
+  currentUser = null;
+  hideLoginModal();
+  loadState();
+  renderApp();
+  updateCycleCountdowns();
+}
+
+function updateSidebarUser() {
+  const user = DB.getCurrentUser();
+  const avatarEl = document.getElementById('sidebar-avatar');
+  const nameEl = document.getElementById('sidebar-user-name');
+  const mobAvatar = document.getElementById('mobile-user-avatar');
+
+  if (user) {
+    const initials = user.name.slice(0,2).toUpperCase();
+    if (avatarEl) { avatarEl.textContent = initials; avatarEl.style.background = user.color; }
+    if (nameEl) nameEl.textContent = user.name.split(' ')[0];
+    if (mobAvatar) { mobAvatar.textContent = initials; mobAvatar.style.background = user.color; }
+  } else {
+    if (avatarEl) { avatarEl.textContent = '?'; avatarEl.style.background = 'var(--sage-mid)'; }
+    if (nameEl) nameEl.textContent = 'Convidado';
+    if (mobAvatar) { mobAvatar.textContent = '?'; mobAvatar.style.background = 'var(--sage-mid)'; }
+  }
+}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* ══════════════════════════════════════════
+   CHECKLIST
+══════════════════════════════════════════ */
+function makeChecklist(items, sk, badgeId, listId) {
+  if (!state[sk]) state[sk] = {};
+  const ul = document.getElementById(listId); if (!ul) return;
+  ul.innerHTML = '';
+  items.forEach((item, i) => {
+    const done = !!state[sk][i];
+    const li = document.createElement('li');
+    li.className = done ? 'done' : '';
+    const isCustom = sk === 'daily' && i >= BASE_DAILY.length;
+    li.innerHTML = `<div class="check-box"><span class="check-tick">✓</span></div><span>${item}</span>${isCustom ? '<button class="task-delete-btn" title="Remover tarefa">×</button>' : ''}`;
+    if (isCustom) {
+      const delBtn = li.querySelector('.task-delete-btn');
+      delBtn.addEventListener('click', e => { e.stopPropagation(); deleteCustomTask(i - BASE_DAILY.length); });
+    }
+    li.onclick = () => {
+      const nowDone = !state[sk][i];
+      state[sk][i] = nowDone;
+      li.className = nowDone ? 'done' : '';
       saveState();
-      updateBadge(sk,items.length,badgeId);
-      if(sk==='daily') updateProgress();
+      updateBadge(sk, items.length, badgeId);
+      if (sk === 'daily') updateProgress();
+      if (sk === 'trim') checkCycleCompletion('trim', items.length);
+      if (sk === 'sem') checkCycleCompletion('sem', items.length);
+      if (nowDone) showToast('✓ Tarefa concluída!');
     };
     ul.appendChild(li);
   });
-  updateBadge(sk,items.length,badgeId);
+  updateBadge(sk, items.length, badgeId);
 }
 
-function updateBadge(sk,total,badgeId){
-  const el=document.getElementById(badgeId); if(!el||!state[sk]) return;
-  const done=Object.values(state[sk]).filter(Boolean).length;
-  el.textContent=done+'/'+total;
+function updateBadge(sk, total, badgeId) {
+  const el = document.getElementById(badgeId); if (!el || !state[sk]) return;
+  const done = Object.values(state[sk]).filter(Boolean).length;
+  el.textContent = done + '/' + total;
 }
 
-function updateProgress(){
-  const total=DATA.daily.length;
-  const done=state.daily?Object.values(state.daily).filter(Boolean).length:0;
-  const pct=Math.round((done/total)*100);
-  document.getElementById('progress-pct').textContent=pct+'%';
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('stat-done').textContent=done;
-  document.getElementById('stat-total').textContent=total;
-  const mob=document.getElementById('mobile-pct');
-  if(mob) mob.textContent=pct+'%';
+function updateProgress() {
+  const total = DATA.daily.length;
+  const done = state.daily ? Object.values(state.daily).filter(Boolean).length : 0;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-total').textContent = total;
+  const mob = document.getElementById('mobile-pct');
+  if (mob) mob.textContent = pct + '%';
+  DB.recordHistory(pct);
+  updateStreak();
+
+  if (pct === 100) {
+    const celebKey = 'celeb_' + DB.getDayKey();
+    if (!DB.get(celebKey)) {
+      DB.set(celebKey, true);
+      setTimeout(triggerConfetti, 400);
+    }
+  }
 }
 
-function showSection(id,el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('sec-'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  if(el) el.classList.add('active');
+function updateStreak() {
+  const streak = DB.getStreak();
+  const el = document.getElementById('streak-count');
+  if (el) el.textContent = streak === 0 ? 'Comece hoje!' : streak + (streak === 1 ? ' dia consecutivo' : ' dias consecutivos');
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
   closeDrawer();
 }
 
-let currentWeek=1;
-function setWeek(n,el){
-  currentWeek=n;
-  document.querySelectorAll('.week-tab').forEach(t=>t.classList.remove('active'));
-  if(el) el.classList.add('active');
-  const w=DATA.weeks[n-1];
-  document.getElementById('week-name-display').textContent=w.label+' — '+w.name;
-  document.getElementById('stat-week').textContent='S'+n;
+function setWeek(n, el) {
+  currentWeek = n;
+  document.querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const w = DATA.weeks[n - 1];
+  document.getElementById('week-name-display').textContent = w.label + ' — ' + w.name;
+  document.getElementById('stat-week').textContent = 'S' + n;
   renderWeekPreview(n);
 }
 
-function renderWeekPreview(n){
-  const keys=['quartos','salas','cozinha','banheiros','externos'];
-  const items=DATA[keys[n-1]].slice(0,6);
-  const ul=document.getElementById('week-preview-list'); if(!ul) return;
-  ul.innerHTML='';
-  items.forEach(item=>{
-    const li=document.createElement('li');
-    li.innerHTML=`<div class="check-box"></div><span>${item}</span>`;
+function renderWeekPreview(n) {
+  const keys = ['quartos','salas','cozinha','banheiros','externos'];
+  const items = DATA[keys[n - 1]].slice(0, 6);
+  const ul = document.getElementById('week-preview-list'); if (!ul) return;
+  ul.innerHTML = '';
+  items.forEach(item => {
+    const li = document.createElement('li');
+    li.innerHTML = `<div class="check-box"></div><span>${item}</span>`;
     ul.appendChild(li);
   });
-  const more=DATA[keys[n-1]].length-6;
-  if(more>0){
-    const li=document.createElement('li');
-    li.style.color='var(--text-muted)'; li.style.fontSize='12px';
-    li.innerHTML=`<span style="margin-left:30px; font-style:italic;">… e mais ${more} tarefas</span>`;
+  const more = DATA[keys[n - 1]].length - 6;
+  if (more > 0) {
+    const li = document.createElement('li');
+    li.style.color = 'var(--text-muted)'; li.style.fontSize = '12px';
+    li.innerHTML = `<span style="margin-left:30px;font-style:italic;">… e mais ${more} tarefas</span>`;
     ul.appendChild(li);
   }
 }
 
-function addCustomDaily(){
-  const inp=document.getElementById('custom-daily');
-  const val=inp.value.trim(); if(!val) return;
-  DATA.daily.push('📝 '+val); inp.value='';
-  makeChecklist(DATA.daily,'daily','daily-badge','daily-list');
-  makeChecklist(DATA.daily,'daily','diario-badge','diario-full-list');
+/* ══════════════════════════════════════════
+   CUSTOM DAILY TASKS
+══════════════════════════════════════════ */
+function addCustomDaily() {
+  const inp = document.getElementById('custom-daily');
+  const val = inp.value.trim(); if (!val) return;
+  inp.value = '';
+
+  const customs = DB.get('custom') || [];
+  customs.push(val);
+  DB.set('custom', customs);
+
+  DATA.daily = [...BASE_DAILY, ...customs.map(t => '📝 ' + t)];
+  makeChecklist(DATA.daily, 'daily', 'daily-badge', 'daily-list');
+  makeChecklist(DATA.daily, 'daily', 'diario-badge', 'diario-full-list');
   updateProgress();
+  showToast('📝 Tarefa adicionada!');
 }
 
-function buildAgenda(){
-  const cont=document.getElementById('agenda-week-cards'); if(!cont) return;
-  DATA.weeks.forEach((w,i)=>{
-    const d=document.createElement('div');
-    d.className='agenda-week-card'+(i+1===currentWeek?' current':'');
-    d.innerHTML=`<div class="agenda-week-icon">${w.icon}</div>
-      <div><div class="agenda-week-name">${w.label}</div><div class="agenda-week-sub">${w.name}</div></div>
-      ${i+1===currentWeek?`<span class="badge badge-gold ml-auto">Esta semana</span>`:''}`;
+/* ══════════════════════════════════════════
+   BUILD COMPONENTS
+══════════════════════════════════════════ */
+function buildAgenda() {
+  const cont = document.getElementById('agenda-week-cards'); if (!cont) return;
+  cont.innerHTML = '';
+  DATA.weeks.forEach((w, i) => {
+    const d = document.createElement('div');
+    d.className = 'agenda-week-card' + (i + 1 === currentWeek ? ' current' : '');
+    d.innerHTML = `<div class="agenda-week-icon">${w.icon}</div><div><div class="agenda-week-name">${w.label}</div><div class="agenda-week-sub">${w.name}</div></div>${i + 1 === currentWeek ? '<span class="badge badge-gold ml-auto">Esta semana</span>' : ''}`;
     cont.appendChild(d);
   });
-  const tl=document.getElementById('agenda-timeline'); if(!tl) return;
-  const tips=['Separe 1 área por semana para não sobrecarregar','Use a lista de cada semana como guia completo','Combine com tarefas diárias para manter o padrão','Após 5 semanas o ciclo se reinicia com mais facilidade','Personalize as listas conforme sua rotina'];
-  const colors=['var(--sage)','var(--gold)','var(--beige-deep)','var(--sage-mid)','var(--sage-light)'];
-  tips.forEach((t,i)=>{
-    tl.innerHTML+=`<div class="timeline-item"><div class="timeline-dot" style="background:${colors[i]}"></div><div class="timeline-content"><div class="timeline-desc">${t}</div></div></div>`;
+  const tl = document.getElementById('agenda-timeline'); if (!tl) return;
+  tl.innerHTML = '';
+  const tips = ['Separe 1 área por semana para não sobrecarregar','Use a lista de cada semana como guia completo','Combine com tarefas diárias para manter o padrão','Após 5 semanas o ciclo se reinicia com mais facilidade','Personalize as listas conforme sua rotina'];
+  const colors = ['var(--sage)','var(--gold)','var(--beige-deep)','var(--sage-mid)','var(--sage-light)'];
+  tips.forEach((t, i) => {
+    tl.innerHTML += `<div class="timeline-item"><div class="timeline-dot" style="background:${colors[i]}"></div><div><div class="timeline-desc">${t}</div></div></div>`;
   });
 }
 
-function buildLaundry(){
-  const grid=document.getElementById('laundry-symbols'); if(!grid) return;
-  const cols=['lavar','alvejar','secar','passar'];
-  const titles=['🪣 Lavar','⬜ Alvejar','💨 Secar','🔲 Passar'];
-  cols.forEach((col,ci)=>{
-    const div=document.createElement('div');
-    div.className='laundry-col';
-    div.innerHTML=`<h3>${titles[ci]}</h3>`;
-    DATA.laundry[col].forEach(s=>{
-      div.innerHTML+=`<div class="laundry-symbol"><div class="sym-box">${s.sym}</div><span>${s.l}</span></div>`;
-    });
+function buildLaundry() {
+  const grid = document.getElementById('laundry-symbols'); if (!grid) return;
+  grid.innerHTML = '';
+  const cols = ['lavar','alvejar','secar','passar'];
+  const titles = ['🪣 Lavar','⬜ Alvejar','💨 Secar','🔲 Passar'];
+  cols.forEach((col, ci) => {
+    const div = document.createElement('div'); div.className = 'laundry-col';
+    div.innerHTML = `<h3>${titles[ci]}</h3>`;
+    DATA.laundry[col].forEach(s => { div.innerHTML += `<div class="laundry-symbol"><div class="sym-box">${s.sym}</div><span>${s.l}</span></div>`; });
     grid.appendChild(div);
   });
-  const tips=document.getElementById('laundry-tips'); if(!tips) return;
-  DATA.laundryTips.forEach(tip=>{
-    const p=document.createElement('div');
-    p.style.cssText='display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.6;font-weight:300;color:var(--text-mid);';
-    p.innerHTML=`<span style="color:var(--sage);flex-shrink:0;font-weight:700;">✓</span><span>${tip}</span>`;
+  const tips = document.getElementById('laundry-tips'); if (!tips) return;
+  tips.innerHTML = '';
+  DATA.laundryTips.forEach(tip => {
+    const p = document.createElement('div');
+    p.style.cssText = 'display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.6;font-weight:300;color:var(--text-mid);';
+    p.innerHTML = `<span style="color:var(--sage);flex-shrink:0;font-weight:700;">✓</span><span>${tip}</span>`;
     tips.appendChild(p);
   });
 }
 
-function buildOrgSteps(){
-  const grid=document.getElementById('org-steps-grid'); if(!grid) return;
-  DATA.orgSteps.forEach(s=>{
-    const div=document.createElement('div');
-    div.className='org-step';
-    div.innerHTML=`<div class="org-step-num">${s.n}</div><div class="org-step-title">${s.title}</div><div class="org-step-desc">${s.desc}</div>`;
+function buildOrgSteps() {
+  const grid = document.getElementById('org-steps-grid'); if (!grid) return;
+  grid.innerHTML = '';
+  DATA.orgSteps.forEach(s => {
+    const div = document.createElement('div'); div.className = 'org-step';
+    div.innerHTML = `<div class="org-step-num">${s.n}</div><div class="org-step-title">${s.title}</div><div class="org-step-desc">${s.desc}</div>`;
     grid.appendChild(div);
   });
 }
 
-function buildWeekDays(){
-  const cont=document.getElementById('week-days'); if(!cont) return;
-  const days=['S','T','Q','Q','S','S','D'];
-  const labels=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
-  const today=new Date().getDay();
-  const idx=today===0?6:today-1;
-  days.forEach((d,i)=>{
-    const chip=document.createElement('div');
-    chip.className='day-chip'+(i===idx?' today':i<idx?' done-day':'');
-    chip.innerHTML=`${d}<span class="day-chip-label">${labels[i][0]}</span>`;
+function buildWeekDays() {
+  const cont = document.getElementById('week-days'); if (!cont) return;
+  cont.innerHTML = '';
+  const days = ['S','T','Q','Q','S','S','D'];
+  const labels = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  const today = new Date().getDay();
+  const idx = today === 0 ? 6 : today - 1;
+  days.forEach((d, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'day-chip' + (i === idx ? ' today' : i < idx ? ' done-day' : '');
+    chip.innerHTML = `${d}<span class="day-chip-label">${labels[i][0]}</span>`;
     cont.appendChild(chip);
   });
 }
 
-function buildHistChart(){
-  const chart=document.getElementById('hist-chart'); if(!chart) return;
-  const vals=[80,55,100,40,70,88,0];
-  const today=new Date().getDay();
-  const idx=today===0?6:today-1;
-  vals.forEach((v,i)=>{
-    const bar=document.createElement('div');
-    const h=Math.max(v*0.62,4);
-    bar.style.cssText=`flex:1;height:${h}px;border-radius:5px 5px 0 0;align-self:flex-end;transition:height 0.4s;background:${i===idx?'var(--sage)':v>0?'var(--sage-pale)':'var(--beige-pale)'};`;
+function buildHistChart() {
+  const chart = document.getElementById('hist-chart'); if (!chart) return;
+  chart.innerHTML = '';
+  const vals = DB.getWeekHistory();
+  const today = new Date().getDay();
+  const idx = today === 0 ? 6 : today - 1;
+  vals.forEach((v, i) => {
+    const bar = document.createElement('div');
+    const h = Math.max(v * 0.62, 4);
+    const isToday = i === idx;
+    const hasData = v > 0;
+    bar.style.cssText = `flex:1;height:${h}px;border-radius:5px 5px 0 0;align-self:flex-end;transition:height 0.5s ease;background:${isToday ? 'var(--sage)' : hasData ? 'var(--sage-pale)' : 'var(--beige-pale)'};`;
+    if (v > 0) bar.title = v + '%';
     chart.appendChild(bar);
   });
 }
 
-function setTodayDate(){
-  const el=document.getElementById('today-date-hero');
-  if(!el) return;
-  el.textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+function buildPlanner() {
+  const cont = document.getElementById('planner-weeks'); if (!cont) return;
+  cont.innerHTML = '';
+  const now = new Date();
+  const startDate = new Date(now);
+  const dow = startDate.getDay();
+  startDate.setDate(startDate.getDate() + (dow === 0 ? -6 : 1 - dow));
+  const todayStr = now.toDateString();
+  for (let w = 0; w < 4; w++) {
+    const weekDiv = document.createElement('div'); weekDiv.className = 'planner-week';
+    const weekStart = new Date(startDate); weekStart.setDate(startDate.getDate() + w * 7);
+    const weekLabel = w === 0 ? 'Esta Semana' : w === 1 ? 'Próxima Semana' : `Semana +${w}`;
+    weekDiv.innerHTML = `<div class="planner-week-title">${weekLabel} — ${weekStart.toLocaleDateString('pt-BR', {day:'numeric',month:'long'})}</div>`;
+    const daysGrid = document.createElement('div'); daysGrid.className = 'planner-days';
+    const dayNames = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+    for (let d = 0; d < 7; d++) {
+      const dayDate = new Date(weekStart); dayDate.setDate(weekStart.getDate() + d);
+      const isToday = dayDate.toDateString() === todayStr;
+      const dayDiv = document.createElement('div');
+      dayDiv.className = 'planner-day' + (isToday ? ' planner-day-today' : '');
+      const key = `pw${w}d${d}`;
+      dayDiv.innerHTML = `<div class="planner-day-name">${dayNames[d]}</div><div class="planner-day-date">${dayDate.getDate().toString().padStart(2,'0')}/${(dayDate.getMonth()+1).toString().padStart(2,'0')}${isToday ? ' · Hoje' : ''}</div><div class="planner-day-content" contenteditable="true" data-key="${key}"></div>`;
+      daysGrid.appendChild(dayDiv);
+    }
+    weekDiv.appendChild(daysGrid);
+    const objKey = `pw${w}obj`; const tskKey = `pw${w}tsk`;
+    const extra = document.createElement('div');
+    extra.innerHTML = `<div class="planner-section"><div class="planner-section-title">Objetivo da semana</div><div class="planner-section-content" contenteditable="true" data-key="${objKey}"></div></div><div class="planner-section"><div class="planner-section-title">Tarefas da semana</div><div class="planner-section-content" contenteditable="true" data-key="${tskKey}"></div></div>`;
+    weekDiv.appendChild(extra);
+    cont.appendChild(weekDiv);
+  }
+  loadPlannerContent();
+  cont.querySelectorAll('[contenteditable]').forEach(el => {
+    el.addEventListener('input', () => {
+      const key = el.dataset.key;
+      if (key) DB.set('p_' + key, el.innerHTML);
+    });
+  });
 }
 
-function init(){
-  loadState();
-  setTodayDate();
-  makeChecklist(DATA.daily,'daily','daily-badge','daily-list');
-  makeChecklist(DATA.daily,'daily','diario-badge','diario-full-list');
-  makeChecklist(DATA.semanal,'semanal','semanal-badge','semanal-list');
-  makeChecklist(DATA.trimestral,'trim','trim-badge','trim-list');
-  makeChecklist(DATA.semestral,'sem','sem-badge','sem-list');
-  makeChecklist(DATA.quartos,'quartos','quartos-badge','quartos-list');
-  makeChecklist(DATA.salas,'salas','salas-badge','salas-list');
-  makeChecklist(DATA.cozinha,'cozinha','cozinha-badge','cozinha-list');
-  makeChecklist(DATA.banheiros,'banh','banh-badge','banh-list');
-  makeChecklist(DATA.externos,'ext','ext-badge','ext-list');
-  renderWeekPreview(1);
+function loadPlannerContent() {
+  document.querySelectorAll('[contenteditable][data-key]').forEach(el => {
+    const val = DB.get('p_' + el.dataset.key);
+    if (val != null) el.innerHTML = val;
+  });
+}
+
+function savePlannerContent() {
+  document.querySelectorAll('[contenteditable][data-key]').forEach(el => {
+    DB.set('p_' + el.dataset.key, el.innerHTML);
+  });
+}
+
+/* ══════════════════════════════════════════
+   RENDER APP
+══════════════════════════════════════════ */
+function renderApp() {
+  const _h = new Date().getHours();
+  const _greet = _h < 12 ? 'Bom dia' : _h < 18 ? 'Boa tarde' : 'Boa noite';
+  const _heroTitle = document.querySelector('#sec-hoje .today-hero h2');
+  if (_heroTitle) _heroTitle.textContent = _greet + ' ✨';
+  const _dateRaw = new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const _dateCap = _dateRaw.charAt(0).toUpperCase() + _dateRaw.slice(1);
+  document.getElementById('today-date-hero').textContent = _dateCap;
+
+  makeChecklist(DATA.daily,   'daily',   'daily-badge',   'daily-list');
+  makeChecklist(DATA.daily,   'daily',   'diario-badge',  'diario-full-list');
+  makeChecklist(DATA.semanal, 'semanal', 'semanal-badge', 'semanal-list');
+  makeChecklist(DATA.trimestral,'trim',  'trim-badge',    'trim-list');
+  makeChecklist(DATA.semestral,'sem',    'sem-badge',     'sem-list');
+  makeChecklist(DATA.quartos, 'quartos', 'quartos-badge', 'quartos-list');
+  makeChecklist(DATA.salas,   'salas',   'salas-badge',   'salas-list');
+  makeChecklist(DATA.cozinha, 'cozinha', 'cozinha-badge', 'cozinha-list');
+  makeChecklist(DATA.banheiros,'banh',   'banh-badge',    'banh-list');
+  makeChecklist(DATA.externos,'ext',     'ext-badge',     'ext-list');
+
+  renderWeekPreview(currentWeek);
   buildAgenda();
   buildLaundry();
   buildOrgSteps();
   buildWeekDays();
   buildHistChart();
+  buildPlanner();
   updateProgress();
-}
-function toggleDrawer(){
-  const sidebar=document.querySelector('.sidebar');
-  const overlay=document.getElementById('drawer-overlay');
-  const btn=document.getElementById('hamburger');
-  const isOpen=sidebar.classList.contains('open');
-  sidebar.classList.toggle('open',!isOpen);
-  overlay.classList.toggle('open',!isOpen);
-  btn.classList.toggle('open',!isOpen);
-  document.body.style.overflow=isOpen?'':'hidden';
+  updateSidebarUser();
 }
 
-function closeDrawer(){
-  const sidebar=document.querySelector('.sidebar');
-  const overlay=document.getElementById('drawer-overlay');
-  const btn=document.getElementById('hamburger');
+/* ══════════════════════════════════════════
+   DRAWER / MOBILE
+══════════════════════════════════════════ */
+function toggleDrawer() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('drawer-overlay');
+  const btn = document.getElementById('hamburger');
+  const isOpen = sidebar.classList.contains('open');
+  sidebar.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+function closeDrawer() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('drawer-overlay');
+  const btn = document.getElementById('hamburger');
   sidebar.classList.remove('open');
   overlay.classList.remove('open');
   btn.classList.remove('open');
-  document.body.style.overflow='';
+  document.body.style.overflow = '';
 }
 
-function setBottomNav(id){
-  document.querySelectorAll('.bottom-nav-item').forEach(b=>b.classList.remove('active'));
-  const el=document.getElementById('bnav-'+id);
-  if(el) el.classList.add('active');
+function setBottomNav(id) {
+  document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('bnav-' + id);
+  if (el) el.classList.add('active');
 }
 
-function updateMobileProgress(){
-  const total=DATA.daily.length;
-  const done=state.daily?Object.values(state.daily).filter(Boolean).length:0;
-  const pct=Math.round((done/total)*100);
-  const el=document.getElementById('mobile-pct');
-  if(el) el.textContent=pct+'%';
+/* ══════════════════════════════════════════
+   DELETE CUSTOM TASK
+══════════════════════════════════════════ */
+function deleteCustomTask(customIdx) {
+  const customs = DB.get('custom') || [];
+  customs.splice(customIdx, 1);
+  DB.set('custom', customs);
+  const baseLen = BASE_DAILY.length;
+  const targetIdx = baseLen + customIdx;
+  const newState = {};
+  Object.entries(state.daily || {}).forEach(([k, v]) => {
+    const ki = parseInt(k);
+    if (ki < targetIdx) newState[k] = v;
+    else if (ki > targetIdx) newState[String(ki - 1)] = v;
+  });
+  state.daily = newState;
+  DATA.daily = [...BASE_DAILY, ...customs.map(t => '📝 ' + t)];
+  saveState();
+  makeChecklist(DATA.daily, 'daily', 'daily-badge', 'daily-list');
+  makeChecklist(DATA.daily, 'daily', 'diario-badge', 'diario-full-list');
+  updateProgress();
+  showToast('🗑 Tarefa removida');
+}
+
+/* ══════════════════════════════════════════
+   RESET CYCLE
+══════════════════════════════════════════ */
+function resetCycle(sk) {
+  DB.set('cycle_' + sk, null);
+  updateCycleCountdowns();
+  showToast('🔄 Ciclo ' + (sk === 'trim' ? 'trimestral' : 'semestral') + ' redefinido');
+}
+
+/* ══════════════════════════════════════════
+   SWIPE GESTURE (MOBILE DRAWER)
+══════════════════════════════════════════ */
+(function() {
+  let sx = 0, sy = 0;
+  document.addEventListener('touchstart', e => {
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dy) > Math.abs(dx) * 1.4 || Math.abs(dx) < 55) return;
+    if (window.innerWidth > 768) return;
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    if (dx > 0 && sx < 36 && !sidebar.classList.contains('open')) toggleDrawer();
+    else if (dx < 0 && sidebar.classList.contains('open')) closeDrawer();
+  }, { passive: true });
+})();
+
+/* ══════════════════════════════════════════
+   DARK MODE
+══════════════════════════════════════════ */
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark');
+  DB.set('darkMode', isDark);
+  const icon = document.getElementById('dark-toggle-icon');
+  const btn = document.getElementById('dark-toggle-btn');
+  if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+  if (btn) btn.classList.toggle('active', isDark);
+  showToast(isDark ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado');
+}
+
+function initDarkMode() {
+  const isDark = DB.get('darkMode');
+  if (isDark) {
+    document.body.classList.add('dark');
+    const icon = document.getElementById('dark-toggle-icon');
+    const btn = document.getElementById('dark-toggle-btn');
+    if (icon) icon.textContent = '☀️';
+    if (btn) btn.classList.add('active');
+  }
+}
+
+/* ══════════════════════════════════════════
+   CONFETTI
+══════════════════════════════════════════ */
+function triggerConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+
+  const colors = ['#AA8824','#D4B858','#366358','#74A294','#E8CC7A','#BAD5CF','#C0A040','#F0DFA8'];
+  const particles = Array.from({length: 140}, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * 240,
+    r: 4 + Math.random() * 7,
+    dx: (Math.random() - 0.5) * 2.5,
+    dy: 1.8 + Math.random() * 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    angle: Math.random() * Math.PI * 2,
+    spin: (Math.random() - 0.5) * 0.18,
+    shape: Math.random() < 0.5 ? 'circle' : 'rect'
+  }));
+
+  let fadeOut = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let allDone = true;
+    particles.forEach(p => {
+      p.y += p.dy; p.x += p.dx; p.angle += p.spin;
+      if (p.y < canvas.height + 20) allDone = false;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - fadeOut);
+      ctx.fillStyle = p.color;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.beginPath();
+      if (p.shape === 'circle') { ctx.arc(0, 0, p.r, 0, Math.PI * 2); }
+      else { ctx.rect(-p.r / 2, -p.r * 0.35, p.r, p.r * 0.7); }
+      ctx.fill();
+      ctx.restore();
+    });
+    if (allDone) fadeOut += 0.04;
+    if (fadeOut < 1) { requestAnimationFrame(draw); }
+    else { canvas.style.display = 'none'; }
+  }
+  draw();
+  showToast('🎉 100% das tarefas concluídas! Incrível!');
+}
+
+/* ══════════════════════════════════════════
+   NOTIFICATIONS
+══════════════════════════════════════════ */
+let _notifScheduled = false;
+
+function requestNotifications() {
+  if (!('Notification' in window)) {
+    showToast('⚠️ Navegador sem suporte a notificações'); return;
+  }
+  if (Notification.permission === 'granted') {
+    DB.set('notifEnabled', true);
+    scheduleNotifications();
+    updateNotifBtn();
+    showToast('🔔 Notificações já estão ativas!');
+    return;
+  }
+  Notification.requestPermission().then(perm => {
+    if (perm === 'granted') {
+      DB.set('notifEnabled', true);
+      scheduleNotifications();
+      updateNotifBtn();
+      showToast('🔔 Notificações ativadas!');
+    } else {
+      showToast('🔕 Permissão negada pelo navegador');
+    }
+  });
+}
+
+function scheduleNotifications() {
+  if (_notifScheduled || !DB.get('notifEnabled')) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  _notifScheduled = true;
+
+  const fire = (hour) => {
+    const now = new Date();
+    const target = new Date(now);
+    target.setHours(hour, 0, 0, 0);
+    if (target <= now) target.setDate(target.getDate() + 1);
+    setTimeout(() => {
+      const total = DATA.daily.length;
+      const done = state.daily ? Object.values(state.daily).filter(Boolean).length : 0;
+      const pending = total - done;
+      if (pending > 0) {
+        new Notification('Manual da Casa ✨', {
+          body: `Você tem ${pending} tarefa${pending > 1 ? 's' : ''} pendente${pending > 1 ? 's' : ''} hoje!`,
+          icon: 'assets/Logo.jpeg',
+          badge: 'assets/Logo.jpeg'
+        });
+      }
+      _notifScheduled = false;
+      scheduleNotifications();
+    }, target - now);
+  };
+
+  fire(9);
+  fire(20);
+}
+
+function updateNotifBtn() {
+  const btn = document.getElementById('notif-btn');
+  if (!btn) return;
+  const enabled = DB.get('notifEnabled') && 'Notification' in window && Notification.permission === 'granted';
+  btn.classList.toggle('active', !!enabled);
+}
+
+/* ══════════════════════════════════════════
+   CYCLE COUNTDOWN
+══════════════════════════════════════════ */
+function checkCycleCompletion(sk, total) {
+  const done = Object.values(state[sk] || {}).filter(Boolean).length;
+  if (done === total) {
+    const label = sk === 'trim' ? 'trimestral' : 'semestral';
+    DB.set('cycle_' + sk, new Date().toISOString());
+    showToast('🎉 Ciclo ' + label + ' concluído! Contador reiniciado.');
+    updateCycleCountdowns();
+  }
+}
+
+function updateCycleCountdowns() {
+  const resetBtn = sk => `<button onclick="resetCycle('${sk}')" style="margin-left:10px;background:transparent;border:1px solid currentColor;border-radius:5px;padding:2px 8px;font-size:10.5px;cursor:pointer;opacity:0.5;font-family:'Lato',sans-serif;color:inherit;" title="Redefinir ciclo">↺ redefinir</button>`;
+  const render = (elId, sk, intervalDays, label) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const lastDone = DB.get('cycle_' + sk);
+    if (!lastDone) {
+      el.innerHTML = `<div class="cycle-chip cycle-none">⏰ Conclua todas as tarefas para iniciar o contador do ciclo ${label}</div>`;
+      return;
+    }
+    const next = new Date(lastDone);
+    next.setDate(next.getDate() + intervalDays);
+    const daysLeft = Math.ceil((next - new Date()) / 86400000);
+    if (daysLeft <= 0) {
+      el.innerHTML = `<div class="cycle-chip cycle-due">⚠️ Manutenção ${label} vencida há ${Math.abs(daysLeft)} dia${Math.abs(daysLeft) !== 1 ? 's' : ''}! ${resetBtn(sk)}</div>`;
+    } else {
+      el.innerHTML = `<div class="cycle-chip cycle-ok">${sk === 'trim' ? '🔄' : '🛠'} Próxima manutenção ${label} em <strong>${daysLeft}</strong> dia${daysLeft !== 1 ? 's' : ''} ${resetBtn(sk)}</div>`;
+    }
+  };
+  render('trim-countdown', 'trim', 90, 'trimestral');
+  render('sem-countdown', 'sem', 180, 'semestral');
+}
+
+/* ══════════════════════════════════════════
+   EXPORT / IMPORT
+══════════════════════════════════════════ */
+function exportData() {
+  const snapshot = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('hbc_')) {
+      try { snapshot[k] = JSON.parse(localStorage.getItem(k)); }
+      catch { snapshot[k] = localStorage.getItem(k); }
+    }
+  }
+  const payload = JSON.stringify({ exportedAt: new Date().toISOString(), version: '2.0', data: snapshot }, null, 2);
+  const blob = new Blob([payload], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'manual-da-casa-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('💾 Backup exportado com sucesso!');
+}
+
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = evt => {
+      try {
+        const backup = JSON.parse(evt.target.result);
+        if (!backup.data || typeof backup.data !== 'object') throw new Error();
+        Object.entries(backup.data).forEach(([k, v]) => {
+          localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v));
+        });
+        showToast('✅ Dados importados! Recarregando…');
+        setTimeout(() => location.reload(), 1500);
+      } catch {
+        showToast('❌ Arquivo inválido ou corrompido');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+/* ══════════════════════════════════════════
+   PRINT
+══════════════════════════════════════════ */
+function printWeek() {
+  savePlannerContent();
+  window.print();
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.getElementById('login-name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') createAndLogin();
+});
+
+function init() {
+  initDarkMode();
+  currentUser = DB.getCurrentUser();
+  if (!currentUser && !DB.getCurrent()) {
+    showLoginModal();
+  } else {
+    hideLoginModal();
+    loadState();
+    renderApp();
+    updateCycleCountdowns();
+    scheduleNotifications();
+    updateNotifBtn();
+  }
 }
 
 init();
